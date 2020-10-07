@@ -38,9 +38,9 @@
         </thead>
         <tbody>
             <tr *ngFor="let frais of listfrais">
-                <th>{{frais.date}}</th>
+                <td>{{frais.date|date:'dd/MM/yyyy'}}</td>
                 <td>{{frais.natureFrais}}</td>
-                <td>{{frais.montantFrais}}</td>
+                <td>{{frais.montantFrais}}€</td>
                 <td>
                     <button type="button" class="btn btn-outline-primary" (click)="editerFrais()">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor"

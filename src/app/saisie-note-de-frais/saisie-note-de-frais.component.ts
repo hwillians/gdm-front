@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Frais } from '../models/frais';
+import { Mission } from '../models/mission';
 import { FraisService } from '../services/frais.service';
 
 @Component({
@@ -9,6 +10,10 @@ import { FraisService } from '../services/frais.service';
 })
 export class SaisieNoteDeFraisComponent implements OnInit {
 
+
+  //il faudra recuperer la vrai mission plus tard
+  mission:Mission = new Mission(1)
+  
   listfrais: Frais[]
   erreurTechnique = false;
 
@@ -26,10 +31,8 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     alert('le frais sera modifié')
   }
 
-
-
   ngOnInit(): void {
-    this.fraisService.listeNotesDeFrais().subscribe(
+    this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
       listf => this.listfrais = listf,
       error => this.erreurTechnique = true,
       () => { }

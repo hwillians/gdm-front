@@ -11,6 +11,7 @@ import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
+import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-d
     AppComponent,
     AuthComponent,
     TechComponent,
-    SaisieNoteDeFraisComponent
+    SaisieNoteDeFraisComponent,
+    SaisieNatureComponent
   ],
   imports: [
     BrowserModule,

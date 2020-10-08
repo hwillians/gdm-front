@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GestionMissionComponent } from './pages/gestion-mission/gestion-mission.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AuthComponent,
     TechComponent,
     SaisieNoteDeFraisComponent,
-    SaisieNatureComponent
+    SaisieNatureComponent,
+    GestionMissionComponent
   ],
   imports: [
     BrowserModule,

@@ -2,17 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Frais } from '../models/frais';
+import { Mission } from '../models/mission';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FraisService {
+export class MissionService {
+
 
 
   constructor(private http: HttpClient) { }
 
-  listeNotesDeFrais(idMission: number): Observable<Frais[]> {
-    return this.http.get<Frais[]>(`${environment.baseUrl}frais/${idMission}`)
+  listeMissions(idCollegue: number): Observable<Mission[]> {
+    return this.http.get<Mission[]>(`${environment.baseUrl}missions/${idCollegue}`)
   }
+
 }

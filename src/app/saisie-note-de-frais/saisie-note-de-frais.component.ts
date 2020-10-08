@@ -18,8 +18,10 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   listfrais: Frais[]
   erreurTechnique = false;
   affichageAjouterFrais = false;
+  fraisAModifier:Frais;
 
   fraisCree: Frais = new Frais;
+
 
   constructor(private fraisService: FraisService) { }
 
@@ -30,18 +32,41 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
   Ajouter(){
     this.affichageAjouterFrais = false;
+    // ajout du fraisCree dans la liste
     this.listfrais.push(this.fraisCree);
+    // rénitialisation de fraisCree
     this.fraisCree = new Frais;
-    console.log(this.fraisCree);
     
   }
 
-  supprimerFrais(){
-    alert('le frais sera supprimé')
+  // supprime une ligne de frais
+  supprimerFrais(id: number){
+    for(let i = 0; i < this.listfrais.length; ++i){
+      if (this.listfrais[i].id === id) {
+          this.listfrais.splice(i,1);
+      }
+    }   
   }
 
-  editerFrais(){
-    alert('le frais sera modifié')
+  editionFrais(id: number){
+    for(let i = 0; i < this.listfrais.length; ++i){
+      if (this.listfrais[i].id === id) {
+        this.fraisAModifier = this.listfrais[i];   
+      }
+    }  
+  }
+
+  annulerEditionFrais () {
+    this.fraisAModifier = new Frais;
+  }
+
+  modifierFrais () {
+    for(let i = 0; i < this.listfrais.length; ++i){
+      if (this.listfrais[i].id === this.fraisAModifier.id) {
+        this.listfrais[i] = this.fraisAModifier;   
+      }
+    }
+    this.fraisAModifier = new Frais; 
   }
 
   ngOnInit(): void {

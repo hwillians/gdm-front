@@ -13,14 +13,27 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
   //il faudra recuperer la vrai mission plus tard
   mission:Mission = new Mission(1)
+
   
   listfrais: Frais[]
   erreurTechnique = false;
+  affichageAjouterFrais = false;
+
+  fraisCree: Frais = new Frais;
 
   constructor(private fraisService: FraisService) { }
 
   ajouterFrais(){
-    alert('un frais sera ajouté')
+    this.affichageAjouterFrais = true;
+    //alert('un frais sera ajouté')
+  }
+
+  Ajouter(){
+    this.affichageAjouterFrais = false;
+    this.listfrais.push(this.fraisCree);
+    this.fraisCree = new Frais;
+    console.log(this.fraisCree);
+    
   }
 
   supprimerFrais(){

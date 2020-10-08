@@ -62,7 +62,14 @@
                             </path>
                         </svg>
                     </button>
+
                 </td>
+            </tr>
+            <tr *ngIf="affichageAjouterFrais">
+                <td><input type="text" name="date" class="form-control" [(ngModel)]="fraisCree.date" required></td>
+                <td><input type="text" name="nature" class="form-control" [(ngModel)]="fraisCree.natureFrais" required></td>
+                <td><input type="text" name="montant" class="form-control" [(ngModel)]="fraisCree.montantFrais" required></td>
+                <td> <button (click)="Ajouter()" class="btn btn-primary">Ajouter</button></td>
             </tr>
         </tbody>
     </table>

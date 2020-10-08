@@ -13,12 +13,13 @@ import {FormsModule} from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     TechComponent,
-    SaisieNoteDeFraisComponent
+    SaisieNoteDeFraisComponent,
   ],
   imports: [
     BrowserModule,

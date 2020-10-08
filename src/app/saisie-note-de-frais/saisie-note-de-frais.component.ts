@@ -12,7 +12,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
   //il faudra recuperer la vrai mission plus tard
-  mission:Mission = new Mission(1)
+  mission:Mission = new Mission(3);
 
   
   listfrais: Frais[]
@@ -25,6 +25,9 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
   constructor(private fraisService: FraisService) { }
 
+
+  // interactions uniquement dans le front
+
   ajouterFrais(){
     this.affichageAjouterFrais = true;
     //alert('un frais sera ajouté')
@@ -34,8 +37,11 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.affichageAjouterFrais = false;
     // ajout du fraisCree dans la liste
     this.listfrais.push(this.fraisCree);
+
+    this.fraisService.creerFrais(3, this.fraisCree).subscribe();
     // rénitialisation de fraisCree
     this.fraisCree = new Frais;
+
     
   }
 
@@ -69,6 +75,14 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.fraisAModifier = new Frais; 
   }
 
+
+   /// communication avec la BDD
+    validerNoteDefrais(){
+
+    }
+
+
+
   ngOnInit(): void {
     this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
       listf => this.listfrais = listf,
@@ -76,5 +90,8 @@ export class SaisieNoteDeFraisComponent implements OnInit {
       () => { }
     )
   }
+
+
+
 
 }

@@ -70,7 +70,7 @@
                         <td><input type="text" name="date" class="form-control" [(ngModel)]="fraisAModifier.date" required></td>
                         <td><input type="text" name="nature" class="form-control" [(ngModel)]="fraisAModifier.natureFrais" required>
                         </td>
-                        <td><input type="text" name="montant" class="form-control" [(ngModel)]="fraisAModifier.montantFrais"
+                        <td><input type="number" name="montant" class="form-control" [(ngModel)]="fraisAModifier.montantFrais"
                                 required></td>
                         <td> <button (click)="modifierFrais()" class="btn btn-primary">Modifier</button></td>
                         <td> <button (click)="annulerEditionFrais()" class="btn btn-primary">Annuler</button></td>
@@ -80,7 +80,7 @@
                 <td><input type="text" name="date" class="form-control" [(ngModel)]="fraisCree.date" required></td>
                 <td><input type="text" name="nature" class="form-control" [(ngModel)]="fraisCree.natureFrais" required>
                 </td>
-                <td><input type="text" name="montant" class="form-control" [(ngModel)]="fraisCree.montantFrais"
+                <td><input type="number" name="montant" class="form-control" [(ngModel)]="fraisCree.montantFrais"
                         required></td>
                 <td> <button (click)="Ajouter()" class="btn btn-primary">Ajouter</button></td>
             </tr>
@@ -88,4 +88,8 @@
     </table>
 
     <button type="button" class="btn btn-link" (click)="ajouterFrais()">Ajouter un frais</button>
+    <div>
+        <button type="button" class="btn btn-link">Valider note de Frais</button>
+    </div>
 </div>
+

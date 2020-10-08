@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Collegue } from 'src/app/auth/auth.domains';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Mission } from 'src/app/models/mission';
 import { MissionService } from 'src/app/services/mission.service';
 
@@ -10,31 +13,35 @@ import { MissionService } from 'src/app/services/mission.service';
 })
 export class GestionMissionComponent implements OnInit {
 
-  collegue:Collegue = new Collegue({id:6})
+  collegue: Collegue
+  ob = this.authService.collegueConnecteObs
 
-  
-listMission:Mission[]
-erreurTechnique = false
+  listMission: Mission[]
+  erreurTechnique = false
 
-  constructor(private missionService:MissionService) { }
+  constructor(private missionService: MissionService, private authService: AuthService) { }
 
-  ajouterMission(){
+  ajouterMission() {
     alert('un frais sera ajouté')
   }
 
-  supprimerMission(){
+  supprimerMission() {
     alert('le frais sera supprimé')
   }
 
-  editerMission(){
+  editerMission() {
     alert('le frais sera modifié')
   }
 
   ngOnInit(): void {
-  this.missionService.listeMissions(this.collegue.id).subscribe(
-  listM => this.listMission = listM,
-  () => this.erreurTechnique = true,
-  () => { }
-  )}
+
+    this.authService.collegueConnecteObs.subscribe(col=>this.collegue=col)
+  
+
+    this.missionService.listeMissions(6).subscribe(
+      listM => this.listMission = listM,
+      () => this.erreurTechnique = true,
+    )
+  }
 
 }

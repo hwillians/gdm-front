@@ -8,6 +8,7 @@ export class Collegue {
   email: string;
   motDePasse: string;
   roles: string[];
+  manager:Collegue
 
   constructor(params: any) {
     Object.assign(this, params);

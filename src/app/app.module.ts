@@ -11,9 +11,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
-import { AjoutNatureComponent } from '../app/saisie-nature/ajout-nature/ajout-nature.component';
-import { ModifierNatureComponent } from './saisie-nature/modifier-nature/modifier-nature.component';
-import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 

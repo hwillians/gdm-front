@@ -1,41 +1,28 @@
-<div class="jumbotron">
-  <h1 class="display-4">Super Application</h1>
+<div>
+  <div class="row justify-content-end">
+    <ng-container *ngIf="collegueConnecte | async as col">
 
+      <div class="card" style="width: 15rem;">
+        <div class="card-body">
+          <p class="card-text">Bonjour : {{col.nom}}</p>
+          <button class="btn link" (click)="seDeconnecter()">Se déconnecter</button>
 
-  <ul class="nav">
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="accueil">Accueil</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="notes-frais">Saisie note de frais</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="gestion-mission">Gestion des missions</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="planning-mission">Planning des missions</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="/primes">Primes</a>
-    </li>
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="natures">Nature de mission</a>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+
+  <ul ngbNav [activeId]="route.fragment | async" class="nav-tabs">
+    <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
+      <a ngbNavLink [routerLink]="link.lien">{{ link.title }}</a>
     </li>
   </ul>
+
 
   <main class="container">
     <router-outlet></router-outlet>
   </main>
-  
-  <ng-container *ngIf="collegueConnecte | async as col">
-    <div class="lead" *ngIf="!col.estAnonyme()">
-      <p>Utilisateur connecté : {{col.email}}</p>
-      <p>Les rôles :</p>
-      <ul>
-        <li *ngFor="let r of col.roles">{{r}}</li>
-      </ul>
-      <button class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</button>
-    </div>
-  </ng-container>
-</div>
 
+
+</div>

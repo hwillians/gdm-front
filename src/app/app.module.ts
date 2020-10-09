@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GestionMissionComponent } from './pages/mission/gestion-mission/gestion-mission.component';
 import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mission.component';
 import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
+import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
+import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
 
 
 
@@ -27,7 +29,7 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
     DemadeMissionComponent,
     ModificationMissionComponent,
     AjoutNatureComponent,
-    ModifierNatureComponent,
+    SaisieNatureComponent,
     SupprimerNatureComponent
 
   ],

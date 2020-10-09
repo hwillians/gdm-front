@@ -17,4 +17,8 @@ export class MissionService {
     return this.http.get<Mission[]>(`${environment.baseUrl}missions/${idCollegue}`)
   }
 
+  modifierMission(idMission:number,mission:Mission):Observable<Mission>{
+    return this.http.patch<Mission>(`${environment.baseUrl}missions/${idMission}`,mission)
+  }
+
 }

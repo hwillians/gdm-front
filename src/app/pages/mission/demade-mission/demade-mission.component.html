@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <h4 class="modal-title">Demande de Mission</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col">
+            <form #etatForm="ngForm">
+                <div class="form-group row" [ngClass]="{ 'was-validated' : dateDebut.dirty}">
+                    <label for="dateDebut" class="col-md-4 col-form-label">Date de début</label>
+                    <div class="col-md-8">
+                        <input type="date" #dateDebut="ngModel" [(ngModel)]="mission.dateDebut" class="form-control"
+                            id="dateDebut" name="dateDebut" required>
+                        <div *ngIf="dateDebut.dirty && dateDebut.invalid" class="invalid-feedback">
+                            La date de début est obligatoire.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row" [ngClass]="{ 'was-validated' : dateFin.dirty}">
+                    <label for="dateFin" class="col-md-4 col-form-label">Date de fin</label>
+                    <div class="col-md-8">
+                        <input type="date" #dateFin="ngModel" [(ngModel)]="mission.dateFin" class="form-control"
+                            id="dateFin" name="dateFin" required>
+                        <div *ngIf="dateFin.dirty && dateFin.invalid" class="invalid-feedback">
+                            La Date de fin est obligatoire.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row" [ngClass]="{ 'was-validated' : nature.dirty}">
+                    <label for="nature" class="col-md-4 col-form-label">Nature</label>
+                    <div class="col-md-8">
+                        <input type="text" #nature="ngModel" [(ngModel)]="mission.nomNature" class="form-control"
+                            id="nature" name="nature" required>
+                        <div *ngIf="nature.dirty && nature.invalid" class="invalid-feedback">
+                            La nature est obligatoire.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row" [ngClass]="{ 'was-validated' : villeDepart.dirty}">
+                    <label for="villeDepart" class="col-md-4 col-form-label">Ville de départ</label>
+                    <div class="col-md-8">
+                        <input type="text" #villeDepart="ngModel" [(ngModel)]="mission.villeDepart" class="form-control"
+                            id="villeDepart" name="villeDepart" required>
+                        <div *ngIf="villeDepart.dirty && villeDepart.invalid" class="invalid-feedback">
+                            La Ville de départ est obligatoire
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row" [ngClass]="{ 'was-validated' : villeArrivee.dirty}">
+                    <label for="villeArrivee" class="col-md-4 col-form-label">Ville d'arrivée</label>
+                    <div class="col-md-8">
+                        <input type="text" #villeArrivee="ngModel" [(ngModel)]="mission.villeArrivee"
+                            class="form-control" id="villeArrivee" name="villeArrive" required>
+                        <div *ngIf="villeArrivee.dirty && villeArrivee.invalid" class="invalid-feedback">
+                            La Ville de arrivée est obligatoire
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row" [ngClass]="{ 'was-validated' : transport.dirty}">
+                    <label for="transport" class="col-md-4 col-form-label">Transport</label>
+                    <div class="col-md-8">
+                        <input type="text" #transport="ngModel" [(ngModel)]="mission.transport" class="form-control"
+                            id="transport" name="transport" required>
+                        <div *ngIf="transport.dirty && transport.invalid" class="invalid-feedback">
+                            Le type de trasnporte est obligatoire
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

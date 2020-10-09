@@ -30,16 +30,19 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="form-group row" [ngClass]="{ 'was-validated' : nature.dirty}">
                     <label for="nature" class="col-md-4 col-form-label">Nature</label>
-                    <div class="col-md-8">
-                        <input type="text" #nature="ngModel" [(ngModel)]="mission.nomNature" class="form-control"
-                            id="nature" name="nature" required>
-                        <div *ngIf="nature.dirty && nature.invalid" class="invalid-feedback">
-                            La nature est obligatoire.
-                        </div>
-                    </div>
-                </div>
+
+                    <select class=" form-control custom-select mr-sm-2" #nature="ngModel" [(ngModel)]="mission.nomNature"
+                    id="nature" name="nature" required>
+                      <option selected>Nature...</option>
+                      <option *ngFor="let nature of listNature" value="nature.nom">{{nature.nom}}</option>
+                    </select>
+                  </div>
+
+
+
                 <div class="form-group row" [ngClass]="{ 'was-validated' : villeDepart.dirty}">
                     <label for="villeDepart" class="col-md-4 col-form-label">Ville de départ</label>
                     <div class="col-md-8">
@@ -74,7 +77,6 @@
             </form>
         </div>
     </div>
-
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

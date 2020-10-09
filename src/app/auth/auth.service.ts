@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Collegue} from './auth.domains';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import { of, BehaviorSubject, Observable } from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import { Collegue } from './auth.domains';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { of, BehaviorSubject, Observable, Subject } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 /**
  * Collègue anonyme.
@@ -38,6 +38,10 @@ export class AuthService {
     return this.collegueConnecteSub.asObservable();
   }
 
+
+
+
+
   /**
    * Service permettant de vérifier si un collegue est authentifié.
    *
@@ -46,13 +50,12 @@ export class AuthService {
    */
   verifierAuthentification(): Observable<Collegue> {
     return this.collegueConnecteSub.getValue().estAnonyme() ?
-            this.http.get<Collegue>(`${environment.baseUrl}${environment.apiAuthMe}`, {withCredentials: true})
-                  .pipe(
-                    map(colServeur => new Collegue(colServeur)),
-                    tap(col => this.collegueConnecteSub.next(col)),
-                    catchError(err => of(COLLEGUE_ANONYME))
-                  ) :     of(this.collegueConnecteSub.getValue())
-              ;
+      this.http.get<Collegue>(`${environment.baseUrl}${environment.apiAuthMe}`, { withCredentials: true })
+        .pipe(
+          map(colServeur => new Collegue(colServeur)),
+          tap(col => this.collegueConnecteSub.next(col)),
+          catchError(err => of(COLLEGUE_ANONYME)))       : of(this.collegueConnecteSub.getValue())
+      ;
   }
 
   /**
@@ -73,8 +76,8 @@ export class AuthService {
       new HttpParams().set('username', email).set('password', mdp), config)
       .pipe(
         map(colServeur => new Collegue(colServeur)),
-        tap(col => this.collegueConnecteSub.next(col) )
-      );
+        tap(col => this.collegueConnecteSub.next(col))
+      ) ;
   }
 
   /**
@@ -91,7 +94,7 @@ export class AuthService {
       })
     };
 
-    return this.http.post<Collegue>(`${environment.baseUrl}${environment.apiLogout}`, null , config)
+    return this.http.post<Collegue>(`${environment.baseUrl}${environment.apiLogout}`, null, config)
       .pipe(
         tap(col => this.collegueConnecteSub.next(COLLEGUE_ANONYME))
       );

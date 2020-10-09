@@ -12,7 +12,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
   //il faudra recuperer la vrai mission plus tard
-  mission:Mission = new Mission(3 )
+  mission:Mission = new Mission(1,null,null,null,null,null,null,null,null)
   
   listfrais: Frais[]
   erreurTechnique = false;

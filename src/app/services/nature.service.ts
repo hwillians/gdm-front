@@ -19,6 +19,7 @@ export class NatureService {
 URL_BACKEND = environment.baseUrl;
 
 
+
 subNature = new Subject<Nature>();
 
 httpOptions = {
@@ -53,6 +54,13 @@ httpOptions = {
 
     });
   }
+
+  deleteNature(id: number): Observable<number> {
+    return this.http.delete<number>(`${this.URL_BACKEND}natures/${id}`);
+  }
+
+  
+
    
     
   }

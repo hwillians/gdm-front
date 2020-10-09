@@ -16,8 +16,11 @@ export class SaisieNatureComponent implements OnInit {
 
   
 
-  supprimerNature(){
-    alert('une nature de mission sera supprimée')
+  delete(nature:Nature):void{
+    this.NatureService.deleteNature(nature.id).subscribe(()=> {},
+    err => console.log(err)
+      
+    );
   }
 
   editerNature(){

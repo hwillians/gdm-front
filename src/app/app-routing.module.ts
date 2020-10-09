@@ -9,6 +9,7 @@ import { PlannigMissionComponent } from './pages/plannig-mission/plannig-mission
 import { PrimesComponent } from './pages/primes/primes.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
+import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 
 
 const routes: Routes =  [
@@ -18,8 +19,7 @@ const routes: Routes =  [
   { path: 'planning-mission', component: PlannigMissionComponent },
   { path: 'primes', component: PrimesComponent },
   { path: 'notes-frais', component: SaisieNoteDeFraisComponent },
-  { path: 'natures', component: SaisieNatureComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/accueil' },
+  { path: 'natures', component: SaisieNatureComponent},
   { path: 'tech', component: TechComponent, canActivate: [StatutConnecteService]}, // /tech accessible uniquement si connecté
   { path: 'auth', component: AuthComponent},
 ];

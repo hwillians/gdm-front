@@ -13,6 +13,8 @@ import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-d
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
+import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
 
 
 @NgModule({
@@ -23,7 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SaisieNoteDeFraisComponent,
     SaisieNatureComponent,
     AjoutNatureComponent,
-    ModifierNatureComponent,
+    SaisieNatureComponent,
     SupprimerNatureComponent
   ],
   imports: [

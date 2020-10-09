@@ -6,5 +6,5 @@ export class Frais{
     id: number;
     date: Date;
     natureFrais: string;
-    montantFrais: number;
+    montant: number;
 }

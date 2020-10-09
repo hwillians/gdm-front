@@ -41,7 +41,7 @@
                 <ng-template [ngIf]="frais != fraisAModifier">
                     <td>{{frais.date|date:'dd/MM/yyyy'}}</td>
                     <td>{{frais.natureFrais}}</td>
-                    <td>{{frais.montantFrais}}€</td>
+                    <td>{{frais.montant}}€</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary" (click)="editionFrais(frais.id)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor"
@@ -70,19 +70,21 @@
                         <td><input type="text" name="date" class="form-control" [(ngModel)]="fraisAModifier.date" required></td>
                         <td><input type="text" name="nature" class="form-control" [(ngModel)]="fraisAModifier.natureFrais" required>
                         </td>
-                        <td><input type="number" name="montant" class="form-control" [(ngModel)]="fraisAModifier.montantFrais"
+                        <td><input type="number" name="montant" class="form-control" [(ngModel)]="fraisAModifier.montant"
                                 required></td>
                         <td> <button (click)="modifierFrais()" class="btn btn-primary">Modifier</button></td>
                         <td> <button (click)="annulerEditionFrais()" class="btn btn-primary">Annuler</button></td>
                 </ng-template>
             </tr>
+
+            <!--
             <tr *ngIf="affichageAjouterFrais">
                 <td><input type="text" name="date" class="form-control" [(ngModel)]="fraisCree.date" required></td>
                 <td><input type="text" name="nature" class="form-control" [(ngModel)]="fraisCree.natureFrais" required>
                 </td>
-                <td><input type="number" name="montant" class="form-control" [(ngModel)]="fraisCree.montantFrais"
+                <td><input type="number" name="montant" class="form-control" [(ngModel)]="fraisCree.montant"
                         required></td>
-                <td> <button (click)="Ajouter()" class="btn btn-primary">Ajouter</button></td>
+                <td> <button (click)="ajouter()" class="btn btn-primary">Ajouter</button></td>
             </tr>
         </tbody>
     </table>
@@ -91,5 +93,74 @@
     <div>
         <button type="button" class="btn btn-link">Valider note de Frais</button>
     </div>
-</div>
+</div>-->
 
+
+
+
+<h4 class="text-right">Ajout d'une ligne de frais <button class="btn btn-success" (click)="open(content)">+</button>
+</h4>
+
+<!--Modal-->
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Ajout d'une ligne de frais</h4>
+    </div>
+    <div class="modal-body">
+
+      <div>
+        <p></p>
+        <div>
+          <form (ngSubmit)="ajouter()" #monForm="ngForm">
+            <div class="form-row">
+              <div class="col">
+                <label for="nature">Date</label>
+              </div>
+              <div class="col">
+                <input [(ngModel)]="fraisCree.date" type="date" class="form-control" id="nature" name="nom"
+                  required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <label for="facture">Nature</label>
+              </div>
+              <div class="col">
+                <input [(ngModel)]="fraisCree.natureFrais" class="form-control" id="natureFrais" name="natureFrais" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <label for="facture">Montant</label>
+              </div>
+              <div class="col">
+                <input [(ngModel)]="fraisCree.montant" type="number" class="form-control" id="montant" name="montant" #montant="ngModel"
+                  required>
+               <p *ngIf="montant.value < 0 ">
+                  Le montant doit être positif.
+                </p>
+              </div>
+            </div>
+        
+            <div class="form-row">
+              <div class="col">
+                <button class="btn btn-danger" (click)="close()" type="reset">Annuler</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-success" type="submit" [disabled]=monForm.invalid>Valider</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </ng-template>
+
+
+  <div>
+    <button type="button" class="btn btn-link">Valider note de Frais</button>
+</div>

@@ -11,7 +11,7 @@ interface FraisBack {
   id: number;
   date: Date;
   natureFrais: string;
-  montantFrais: number;
+  montant: number;
 }
 
 @Injectable({
@@ -26,7 +26,7 @@ export class FraisService {
     return this.http.get<Frais[]>(`${environment.baseUrl}frais/${idMission}`)
   }
 
-
+// créer un frais en base
   creerFrais(idMission:number, fraisCree: Frais):Observable<Frais>{
     console.log(fraisCree);
     
@@ -37,9 +37,32 @@ export class FraisService {
         frais.id=fraisBack.id;
         frais.date=new Date(fraisBack.date);
         frais.natureFrais=fraisBack.natureFrais;
-        frais.montantFrais=fraisBack.montantFrais;
+        frais.montant=fraisBack.montant;
         return frais;
       }
     ));
   }
+
+
+  // modifier un frais en base
+  modifierFrais(id: number, date: Date, natureFrais: string, montant: number): Observable<any>{
+    const body = {
+      "date": date,
+      "natureFrais": natureFrais,
+      "montantFrais": montant
+    }
+  
+  return this.http.patch<FraisBack>(`${environment.baseUrl}frais/${id}`, body)
+  .pipe(
+    map(fraisBack => {
+      let frais = new Frais;
+      frais.date=new Date(fraisBack.date);
+      frais.natureFrais=fraisBack.natureFrais;
+      frais.montant=fraisBack.montant;
+      return frais;
+    }
+  ))
+  }
+
+
 }

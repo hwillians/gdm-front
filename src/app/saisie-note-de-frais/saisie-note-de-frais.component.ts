@@ -41,13 +41,32 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.modalService.dismissAll();
     //window.location.reload();
   }
+
+  openModification(id: number): void{
+    
+    for (let i = 0; i < this.listfrais.length; ++i) {
+      if (this.listfrais[i].id === id) {
+        this.fraisAModifier = this.listfrais[i];
+        
+      }
+    }
+    for (let i = 0; i < this.listfrais.length; ++i) {
+      if (this.listfrais[i].id === this.fraisAModifier.id) {
+        this.listfrais[i] = this.fraisAModifier;
+        this.modalService.open(id);
+    }
+    }
+    
+  }
+
+
   ///
 
 
-  ajouterFrais() {
-    this.affichageAjouterFrais = true;
-    //alert('un frais sera ajouté')
-  }
+  // ajouterFrais() {
+  //   this.affichageAjouterFrais = true;
+  //   //alert('un frais sera ajouté')
+  // }
 
   ajouter() {
     this.affichageAjouterFrais = false;

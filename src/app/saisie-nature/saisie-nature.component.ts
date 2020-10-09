@@ -8,15 +8,13 @@ import { NatureService } from "../services/nature.service";
 })
 export class SaisieNatureComponent implements OnInit {
 
-  listNatures:Nature[]
+  listeNatures:Nature[]
   erreurTechnique = false;
 
 
   constructor(private NatureService:NatureService) { }
 
-  ajouterNature(){
-    alert('une nature de mission sera ajoutée')
-  }
+  
 
   supprimerNature(){
     alert('une nature de mission sera supprimée')
@@ -29,7 +27,7 @@ export class SaisieNatureComponent implements OnInit {
   ngOnInit(): void {
 
     this.NatureService.listeNatures().subscribe(
-      listNature => this.listNatures = listNature,
+      listeNatures => this.listeNatures = listeNatures,
       error => this.erreurTechnique = true,
       () => { }
     )

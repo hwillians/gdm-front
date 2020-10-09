@@ -10,9 +10,12 @@ import {FormsModule} from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GestionMissionComponent } from './pages/mission/gestion-mission/gestion-mission.component';
+import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mission.component';
+import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
-import { ModifierNatureComponent } from './saisie-nature/modifier-nature/modifier-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+
 
 
 @NgModule({
@@ -22,9 +25,13 @@ import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/suppr
     TechComponent,
     SaisieNoteDeFraisComponent,
     SaisieNatureComponent,
+    GestionMissionComponent,
+    DemadeMissionComponent,
+    ModificationMissionComponent,
     AjoutNatureComponent,
-    ModifierNatureComponent,
+    SaisieNatureComponent,
     SupprimerNatureComponent
+
   ],
   imports: [
     BrowserModule,

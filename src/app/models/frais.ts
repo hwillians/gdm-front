@@ -7,5 +7,7 @@ export class Frais{
     date: Date;
     natureFrais: string;
     montantFrais: number;
+    modified: boolean = false;
+    new: boolean= false;
 
 }

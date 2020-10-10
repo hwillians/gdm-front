@@ -45,14 +45,14 @@ export class FraisService {
 
 
   // modifier un frais en base
-  modifierFrais(id: number, date: Date, natureFrais: string, montantFrais: number): Observable<any>{
+  modifierFrais(frais: Frais): Observable<any>{
     const body = {
-      "date": date,
-      "natureFrais": natureFrais,
-      "montantFrais": montantFrais
+      "date": frais.date,
+      "natureFrais": frais.natureFrais,
+      "montantFrais": frais.montantFrais
     }
   
-  return this.http.patch<FraisBack>(`${environment.baseUrl}frais/${id}`, body)
+  return this.http.patch<FraisBack>(`${environment.baseUrl}frais/${frais.id}`, body)
   .pipe(
     map(fraisBack => {
       let frais = new Frais;

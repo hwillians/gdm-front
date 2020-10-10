@@ -19,10 +19,10 @@ interface FraisBack {
 })
 export class FraisService {
 
-  
+
   constructor(private http: HttpClient) { }
 
-  listeNotesDeFrais(idMission:number):Observable<Frais[]>{
+  listeNotesDeFrais(idMission: number): Observable<Frais[]> {
     return this.http.get<Frais[]>(`${environment.baseUrl}frais/${idMission}`)
   }
 

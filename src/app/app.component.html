@@ -1,22 +1,41 @@
 <div class="jumbotron">
   <h1 class="display-4">Super Application</h1>
-<app-saisie-note-de-frais></app-saisie-note-de-frais>
 
 
+  <ul class="nav">
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="accueil">Accueil</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="notes-frais">Saisie note de frais</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="gestion-mission">Gestion des missions</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="planning-mission">Planning des missions</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/primes">Primes</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="natures">Nature de mission</a>
+    </li>
+  </ul>
 
-
+  <main class="container">
+    <router-outlet></router-outlet>
+  </main>
+  
   <ng-container *ngIf="collegueConnecte | async as col">
     <div class="lead" *ngIf="!col.estAnonyme()">
-      <p  >Utilisateur connecté : {{col.email}}</p>
+      <p>Utilisateur connecté : {{col.email}}</p>
       <p>Les rôles :</p>
       <ul>
         <li *ngFor="let r of col.roles">{{r}}</li>
       </ul>
-      <button  class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</button>
-
+      <button class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</button>
     </div>
   </ng-container>
 </div>
-<main class="container">
-  <router-outlet></router-outlet>
-</main>
+

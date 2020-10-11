@@ -10,11 +10,18 @@ import { Mission } from '../models/mission';
 export class MissionService {
 
 
+  
+
+
 
   constructor(private http: HttpClient) { }
 
   listeMissions(idCollegue: number): Observable<Mission[]> {
     return this.http.get<Mission[]>(`${environment.baseUrl}missions/${idCollegue}`)
+  }
+
+  listeMissionsManager(idManager: number): Observable<Mission[]>  {
+    return this.http.get<Mission[]>(`${environment.baseUrl}missions/manager/${idManager}`)
   }
 
   modifierMission(idMission:number,mission:Mission):Observable<Mission>{

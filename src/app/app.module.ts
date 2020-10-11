@@ -15,6 +15,7 @@ import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mi
 import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
 
 
 
@@ -30,7 +31,8 @@ import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/suppr
     ModificationMissionComponent,
     AjoutNatureComponent,
     SaisieNatureComponent,
-    SupprimerNatureComponent
+    SupprimerNatureComponent,
+    ValidationMissionComponent
 
   ],
   imports: [

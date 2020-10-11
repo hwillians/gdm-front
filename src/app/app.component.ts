@@ -54,12 +54,9 @@ export class AppComponent {
         if (this.collegue.roles.includes("ROLE_ADMINISTRATEUR")) {
           this.links.push({ title: 'Nature de mission', fragment: '6', lien: '/natures' },)
         } else if(this.collegue.roles.includes("ROLE_MANAGER")){
-          this.links.push({ title: 'Validation mission', fragment: '6', lien: '' },)
+          this.links.push({ title: 'Validation mission', fragment: '6', lien: '/validation-mission' },)
         }
-      }
-      
+      } 
     )
-
-
   }
 }

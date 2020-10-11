@@ -59,7 +59,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
   closeSupprimer(): void {
     this.modalService.dismissAll();
-    this.supprimerFrais = null;
+    this.indexASupprimer = null;
   }
   /// fin modal
 
@@ -122,6 +122,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
       }
     });
     alert('La note de frais est validée !');
+    window.location.reload();
 
   }
 

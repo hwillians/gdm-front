@@ -45,7 +45,7 @@ export class FraisService {
 
 
   // modifier un frais en base
-  modifierFrais(frais: Frais): Observable<any>{
+  modifierFrais(frais: Frais): Observable<Frais>{
     const body = {
       "date": frais.date,
       "natureFrais": frais.natureFrais,
@@ -64,5 +64,10 @@ export class FraisService {
   ))
   }
 
+
+  // supprimer un frais en base
+  supprimerFrais(frais: Frais){
+    return this.http.delete<Frais>(`${environment.baseUrl}frais/${frais.id}`);
+  }
 
 }

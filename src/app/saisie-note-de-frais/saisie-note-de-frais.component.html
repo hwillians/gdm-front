@@ -37,13 +37,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let frais of listfrais">
+            <tr *ngFor="let frais of listfrais; let index = index;">
                 <ng-template [ngIf]="frais">
                     <td>{{frais.date|date:'dd/MM/yyyy'}}</td>
                     <td>{{frais.natureFrais}}</td>
                     <td>{{frais.montantFrais}}€</td>
+                    <td>{{index}}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-primary" (click)="openModification(modification, frais.id)">
+                        <button type="button" class="btn btn-outline-primary" (click)="openModification(modification, index)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -52,7 +53,7 @@
                             </svg>
                         </button>
 
-                        <button type="button" class="btn btn-outline-primary" (click)="supprimerFrais(frais.id)">
+                        <button type="button" class="btn btn-outline-primary" (click)="supprimerFrais(index)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -81,7 +82,7 @@
     <button type="button" class="btn btn-link" (click)="validerNoteDefrais()">Valider note de Frais</button>
 </div>
 
-<!-- Modal -->
+<!-- Modal modification -->
 <ng-template #modification let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Modification d'une ligne de frais</h4>
@@ -150,7 +151,7 @@
     <div class="modal-footer"></div>
 </ng-template>
 
-<!--Modal-->
+<!--Modal ajout-->
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Ajout d'une ligne de frais</h4>
@@ -196,7 +197,7 @@
 
                     <div class="form-row">
                         <div class="col">
-                            <button class="btn btn-danger" (click)="close()" type="reset">Annuler</button>
+                            <button class="btn btn-danger" (click)="close()" type="reset">Annuller</button>
                         </div>
                         <div class="col">
                             <button class="btn btn-success" type="submit" [disabled]=monForm.invalid>Valider</button>

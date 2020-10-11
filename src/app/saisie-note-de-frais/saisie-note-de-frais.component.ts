@@ -13,12 +13,13 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
   //il faudra recuperer la vrai mission plus tard
-  mission:Mission = new Mission(3,null,null,null,null,null,null,null,null);
-  
+  mission: Mission = new Mission(3, null, null, null, null, null, null, null, null);
+
   listfrais: Frais[]
   erreurTechnique = false;
   affichageAjouterFrais = false;
   fraisAModifier: Frais;
+  indexASupprimer: number;
 
   fraisCree: Frais = new Frais;
 
@@ -47,12 +48,22 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  openSuppression(content, index): void {
+    this.indexASupprimer = index; 
+    this.modalService.open(content);
+  }
+
   close(): void {
     this.modalService.dismissAll();
   }
-/// fin modal
 
-// ajout d'un frais à la liste
+  closeSupprimer(): void {
+    this.modalService.dismissAll();
+    this.supprimerFrais = null;
+  }
+  /// fin modal
+
+  // ajout d'un frais à la liste
   ajouter() {
     this.fraisCree.new = true;
     this.listfrais.push(this.fraisCree);
@@ -67,7 +78,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.fraisAModifier = this.listfrais[index];
   }
 
-// modification d'un frais dans la liste
+  // modification d'un frais dans la liste
   modifierFrais() {
     for (let i = 0; i < this.listfrais.length; ++i) {
       if (this.listfrais[i].id === this.fraisAModifier.id) {
@@ -82,15 +93,17 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
   // supprime une ligne de frais dans la liste et la BDD
-  supprimerFrais(index: number) {
-    if (this.listfrais[index].new) {
-      this.listfrais.splice(index, 1);
+  supprimerFrais() {
+    if (this.listfrais[this.indexASupprimer].new) {
+      this.listfrais.splice(this.indexASupprimer, 1);
     } else {
-      this.fraisService.supprimerFrais(this.listfrais[index]).subscribe();
-      this.listfrais.splice(index, 1);
+      this.fraisService.supprimerFrais(this.listfrais[this.indexASupprimer]).subscribe();
+      this.listfrais.splice(this.indexASupprimer, 1);
     }
-    
+    this.closeSupprimer();
   }
+
+
 
   /// communication avec la BDD
   // validation de la note de frais
@@ -98,7 +111,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.listfrais.forEach(frais => {
       if (frais.new) {
         // TODO mettre à jour l'id de la mission
-        this.fraisService.creerFrais(3,frais).subscribe(res => {
+        this.fraisService.creerFrais(3, frais).subscribe(res => {
           frais.new = false;
         });
       } else if (frais.modified) {

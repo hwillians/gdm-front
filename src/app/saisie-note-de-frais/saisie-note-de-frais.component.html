@@ -91,7 +91,7 @@
         <div>
             <p></p>
             <div>
-                <form (ngSubmit)="ajouter()" #modicationForm="ngForm">
+                <form (ngSubmit)="modifierFrais()" #modicationForm="ngForm">
                     <div class="form-row">
                         <div class="col">
                             <label for="date">Date</label>
@@ -131,7 +131,7 @@
                             <button class="btn btn-danger" (click)="close()" type="reset">Annuler</button>
                         </div>
                         <div class="col">
-                            <button class="btn btn-success" type="submit" (click)="modifierFrais()"
+                            <button class="btn btn-success" type="submit"
                                 [disabled]=modicationForm.invalid>Valider</button>
                         </div>
                     </div>

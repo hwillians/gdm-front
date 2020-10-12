@@ -19,6 +19,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   erreurTechnique = false;
   affichageAjouterFrais = false;
   fraisAModifier: Frais;
+  indexAModifier: number;
   indexASupprimer: number;
 
   fraisCree: Frais = new Frais;
@@ -63,6 +64,22 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
   /// fin modal
 
+  dateIsValide(date: Date): boolean {
+    return new Date(date) >= new Date(this.mission.dateDebut) &&
+      new Date(date) <= new Date(this.mission.dateFin)
+  }
+
+  fraisIsUnique(frais: Frais, indexExclusion:number): boolean {
+    var isUnique = true;
+    for (let i = 0; i < this.listfrais.length; ++i) {
+      if (i != indexExclusion) {
+        if (frais.date === this.listfrais[i].date && frais.natureFrais === this.listfrais[i].natureFrais) {
+          isUnique = false;
+        }
+      }
+    }
+    return isUnique;
+  }
 
   // ajout d'un frais à la liste
   ajouter() {
@@ -70,16 +87,10 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     let isUnique = true;
 
     // vérification de la date
-    if (new Date(this.fraisCree.date) >= new Date(this.mission.dateDebut) &&
-      new Date(this.fraisCree.date) <= new Date(this.mission.dateFin)) {
+    if (this.dateIsValide(this.fraisCree.date)) {
 
       // contrainte : couple date/nature doit être unique
-      for (let i = 0; i < this.listfrais.length; ++i) {
-        if (this.fraisCree.date === this.listfrais[i].date && this.fraisCree.natureFrais === this.listfrais[i].natureFrais) {
-          isUnique = false;
-        }
-      }
-      if (!isUnique) {
+      if (!this.fraisIsUnique(this.fraisCree, null)) {
         alert('Le couple date/nature doit être unique');
       }
       else {
@@ -96,19 +107,30 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
   // assignation du frais à modifier
   editionFrais(index: number) {
-    this.fraisAModifier = this.listfrais[index];
+    this.fraisAModifier = new Frais();
+    this.fraisAModifier.id = this.listfrais[index].id;
+    this.fraisAModifier.date = this.listfrais[index].date;
+    this.fraisAModifier.natureFrais = this.listfrais[index].natureFrais;
+    this.fraisAModifier.montantFrais = this.listfrais[index].montantFrais;
+    this.fraisAModifier.new = this.listfrais[index].new;
+    this.fraisAModifier.modified = this.listfrais[index].modified;
+    this.indexAModifier = index;
   }
 
   // modification d'un frais dans la liste
   modifierFrais() {
-    for (let i = 0; i < this.listfrais.length; ++i) {
-      if (this.listfrais[i].id === this.fraisAModifier.id) {
-        this.fraisAModifier.modified = true;
-        this.listfrais[i] = this.fraisAModifier;
-      }
+
+    if (this.dateIsValide(this.fraisAModifier.date) && this.fraisIsUnique(this.fraisAModifier, this.indexAModifier)) {
+      this.fraisAModifier.modified = true;
+      this.listfrais[this.indexAModifier] = this.fraisAModifier;
+      this.fraisAModifier = new Frais;
+      this.indexAModifier = null;
+      this.modalService.dismissAll();
+    } else if (!this.dateIsValide(this.fraisAModifier.date)) {
+      alert("Date invalide");
+    } else {
+      alert('Le couple date/nature doit être unique');
     }
-    this.fraisAModifier = new Frais;
-    this.modalService.dismissAll();
   }
 
 
@@ -128,19 +150,24 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   /// communication avec la BDD
   // validation de la note de frais
   validerNoteDefrais() {
+    let nbFraisModifies = 0;
+    let nbFraisAjoutes = 0;
     this.listfrais.forEach(frais => {
       if (frais.new) {
+        nbFraisAjoutes ++;
         // TODO mettre à jour l'id de la mission automatiquement
         this.fraisService.creerFrais(3, frais).subscribe(res => {
           frais.new = false;
         });
       } else if (frais.modified) {
+        nbFraisModifies ++;
         this.fraisService.modifierFrais(frais).subscribe(res => {
           frais.modified = false;
+
         });
       }
     });
-    alert('La note de frais est validée !');
+    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifiés' );
     window.location.reload();
 
   }

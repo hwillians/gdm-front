@@ -156,17 +156,17 @@
                 <form (ngSubmit)="ajouter()" #monForm="ngForm">
                     <div class="form-row">
                         <div class="col">
-                            <label for="nature">Date</label>
+                            <label for="date">Date</label>
                         </div>
                         <div class="col">
                             <input [(ngModel)]="fraisCree.date" type="date" class="form-control" id="nature" name="nom"
-                                required>
+                                required>                   
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col">
-                            <label for="facture">Nature</label>
+                            <label for="nature">Nature</label>
                         </div>
                         <div class="col">
                             <input [(ngModel)]="fraisCree.natureFrais" class="form-control" id="natureFrais"
@@ -176,7 +176,7 @@
 
                     <div class="form-row">
                         <div class="col">
-                            <label for="facture">Montant</label>
+                            <label for="montantFrais">Montant</label>
                         </div>
                         <div class="col">
                             <input [(ngModel)]="fraisCree.montantFrais" type="number" min="0" oninput="validity.valid||(value='');" class="form-control"

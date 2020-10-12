@@ -13,7 +13,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
   //il faudra recuperer la vrai mission plus tard
-  mission: Mission = new Mission(3, null, null, null, null, null, null, null, null);
+  mission: Mission = new Mission(3, new Date("2020-01-01"), new Date("2020-01-03"), null, null, null, null, null, null);
 
   listfrais: Frais[]
   erreurTechnique = false;
@@ -49,7 +49,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
 
   openSuppression(content, index): void {
-    this.indexASupprimer = index; 
+    this.indexASupprimer = index;
     this.modalService.open(content);
   }
 
@@ -63,13 +63,34 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
   /// fin modal
 
+
   // ajout d'un frais à la liste
   ajouter() {
     this.fraisCree.new = true;
-    this.listfrais.push(this.fraisCree);
-    // rénitialisation de fraisCree
-    this.fraisCree = new Frais;
-    this.modalService.dismissAll();
+    let isUnique = true;
+
+    // vérification de la date
+    if (new Date(this.fraisCree.date) >= new Date(this.mission.dateDebut) &&
+      new Date(this.fraisCree.date) <= new Date(this.mission.dateFin)) {
+
+      // contrainte : couple date/nature doit être unique
+      for (let i = 0; i < this.listfrais.length; ++i) {
+        if (this.fraisCree.date === this.listfrais[i].date && this.fraisCree.natureFrais === this.listfrais[i].natureFrais) {
+          isUnique = false;
+        }
+      }
+      if (!isUnique) {
+        alert('Le couple date/nature doit être unique');
+      }
+      else {
+        this.listfrais.push(this.fraisCree);
+        // rénitialisation de fraisCree
+        this.fraisCree = new Frais;
+        this.modalService.dismissAll();
+      }
+    } else {
+      alert("Date invalide");
+    }
   }
 
 
@@ -86,7 +107,6 @@ export class SaisieNoteDeFraisComponent implements OnInit {
         this.listfrais[i] = this.fraisAModifier;
       }
     }
-
     this.fraisAModifier = new Frais;
     this.modalService.dismissAll();
   }
@@ -110,12 +130,11 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   validerNoteDefrais() {
     this.listfrais.forEach(frais => {
       if (frais.new) {
-        // TODO mettre à jour l'id de la mission
+        // TODO mettre à jour l'id de la mission automatiquement
         this.fraisService.creerFrais(3, frais).subscribe(res => {
           frais.new = false;
         });
       } else if (frais.modified) {
-        // TODO mettre à jour l'id de la mission
         this.fraisService.modifierFrais(frais).subscribe(res => {
           frais.modified = false;
         });

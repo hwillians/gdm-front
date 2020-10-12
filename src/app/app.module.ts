@@ -15,6 +15,7 @@ import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+import { ModifierNatureComponent } from './saisie-nature/modifier-nature/modifier-nature.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/suppr
     SaisieNatureComponent,
     AjoutNatureComponent,
     SaisieNatureComponent,
-    SupprimerNatureComponent
+    SupprimerNatureComponent,
+    ModifierNatureComponent
   ],
   imports: [
     BrowserModule,

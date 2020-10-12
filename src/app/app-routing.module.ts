@@ -9,7 +9,7 @@ import { PlannigMissionComponent } from './pages/plannig-mission/plannig-mission
 import { PrimesComponent } from './pages/primes/primes.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
-import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
+
 
 
 const routes: Routes =  [

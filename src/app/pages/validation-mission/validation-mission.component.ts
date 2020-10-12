@@ -15,15 +15,20 @@ export class ValidationMissionComponent implements OnInit {
   listMission: Mission[]
   erreurTechnique = false
 
-  acepterMission() {
-    alert('la mission sera accepté')
+  acepterMission(idMission: number, valide: boolean) {
+    this.missionService.validationMission(idMission, valide,this.manager.id).subscribe(
+      listM => this.listMission=listM,
+    )
+   alert('la mission '+idMission+' a été acceptée')
   }
 
-  rejeterMission() {
-    alert('la mission sera refusée')
+  rejeterMission(idMission: number, valide: boolean) {
+    this.missionService.validationMission(idMission, valide,this.manager.id).subscribe(
+      listM => this.listMission=listM,
+    )
+    alert('la mission '+idMission+' a été refusée')
   }
 
-  
   constructor(private missionService: MissionService, private authService: AuthService,) { }
 
   ngOnInit(): void {

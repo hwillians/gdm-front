@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Mission } from '../models/mission';
 
@@ -9,6 +9,17 @@ import { Mission } from '../models/mission';
 })
 export class MissionService {
 
+  subjectMissionSelectionne = new Subject<Mission>()
+  
+  publierMission(mission: Mission): void {
+    this.subjectMissionSelectionne.next(mission); 
+  }
+
+  abonnerMissionSelectionne(): Observable<Mission> {
+    return this.subjectMissionSelectionne.asObservable();
+  }
+  
+  
   constructor(private http: HttpClient) { }
 
   listeMissions(idCollegue: number): Observable<Mission[]> {

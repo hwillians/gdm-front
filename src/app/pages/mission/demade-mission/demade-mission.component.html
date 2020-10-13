@@ -93,7 +93,6 @@
         </div>
     </div>
 </div>
-{{mission|json}}
 <div class="modal-footer">
     <button 
     [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee " type="button" class="btn btn-outline-dark" (click)="demanderMission();activeModal.close('Close click');">demander</button>

@@ -33,12 +33,7 @@ export class DemadeMissionComponent implements OnInit {
     public formatter: NgbDateParserFormatter) {
   }
 
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  }
-
-  diff: number = 1
+   diff: number = 1
   listTransport = [
     { type: 'Avion', delay: 7 },
     { type: 'Covoiturage', delay: 1 },
@@ -48,9 +43,6 @@ export class DemadeMissionComponent implements OnInit {
   collegue: Collegue;
 
   erreurTechnique: boolean;
-
-
-
 
   demanderMission() {
     this.missionService.demanderMission(this.collegue.id, this.mission).subscribe()
@@ -65,10 +57,9 @@ export class DemadeMissionComponent implements OnInit {
       () => this.authService.collegueConnecteObs.subscribe(),
       () => this.erreurTechnique = true,
     )
-    this.mission = new Mission(1, null, null, null, null, null, null, "", 0)
+    this.mission = new Mission(1, null, null, null, null, null, null, null, null)
 
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
 
   }
 }
-

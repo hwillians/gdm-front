@@ -25,7 +25,7 @@ export class DemadeMissionComponent implements OnInit {
   mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
-  min = new Date()
+  
   diff: number = 1
   listTransport = [
     { type: 'Avion', delay: 7 },

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct, NgbInputDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Collegue } from 'src/app/auth/auth.domains';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -25,6 +25,7 @@ export class DemadeMissionComponent implements OnInit {
   mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
+  min = new Date()
   diff: number = 1
   listTransport = [
     { type: 'Avion', delay: 7 },
@@ -76,11 +77,10 @@ export class DemadeMissionComponent implements OnInit {
       () => this.authService.collegueConnecteObs.subscribe(),
       () => this.erreurTechnique = true,
     )
-    this.mission = new Mission(1, null, null, null, null, null, null, "", 0)
+    this.mission = new Mission(1, null, null, null, null, null, null, null, 0)
 
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
     this.dateTemoin.setDate(this.dateTemoin.getDate() + 7)
 
   }
 }
-

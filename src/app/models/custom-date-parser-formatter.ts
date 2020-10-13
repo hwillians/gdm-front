@@ -23,5 +23,4 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
       return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
     }
 
-
 }

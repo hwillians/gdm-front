@@ -43,15 +43,27 @@ export class ModificationMissionComponent implements OnInit {
       this.missionService.abonnerMissionSelectionne().subscribe(mission=>this.mission=mission)
     }
 
+    parseDate(date: Date) {
+      let st = date.toString().split("-")
+      return date ? st[2] + "-" + st[1] + "-" + st[0]:null
+    }
+
   modifierMission(mission: Mission) {
-    this.missionService.modifierMission(mission.id, mission)
+    this.missionService.modifierMission(mission.id, 
+      new Mission(this.mission.id, 
+        new Date(this.parseDate(this.mission.dateDebut)), 
+        new Date(this.parseDate(this.mission.dateFin)), 
+        this.mission.nomNature, 
+        this.mission.villeDepart,
+        this.mission.villeArrivee,
+        this.mission.transport,
+        null,
+        0))
       .subscribe(newMission => this.mission = newMission)
       
   }
 
   ngOnInit(): void {
-
-  
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     )

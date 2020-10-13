@@ -15,7 +15,7 @@
                     <div class="input-group col-md-8">
                         <input class="form-control" #dateDebut="ngModel" id="dateDebut" name="dateDebut"
                             [(ngModel)]="mission.dateDebut" ngbDatepicker #db="ngbDatepicker" [minDate]="dateMin"
-                            placeholder="jj/mm/aaaa" [value]="mission.dateDebut" required>
+                            placeholder="jj/mm/aaaa" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="db.toggle()"
                                 type="button"></button>
@@ -25,12 +25,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group row" [ngClass]="{ 'was-validated' : dateFin.dirty}">
                     <label for="dateFin" class="col-md-4 col-form-label">Date de fin</label>
                     <div class="input-group col-md-8">
-                        <input #dateFin="ngModel"class="form-control"  id="dateFin" name="dateFin"
-                            [(ngModel)]="mission.dateFin" ngbDatepicker #df="ngbDatepicker" [value]="mission.dateFin" [minDate]="dateMin"
+                        <input #dateFin="ngModel" class="form-control" id="dateFin" name="dateFin"
+                            [(ngModel)]="mission.dateFin" ngbDatepicker #df="ngbDatepicker" [minDate]="dateMin"
                             placeholder="jj/mm/aaaa" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="df.toggle()"
@@ -80,7 +80,7 @@
                     <div class="col-md-8">
                         <select class=" form-control custom-select mr-sm-2" #transport="ngModel"
                             [(ngModel)]="mission.transport" id="trasnport" name="trasnport" required>
-                           
+
                             <option *ngFor="let transport of listTransport" [value]="transport.type">{{transport.type}}
                             </option>
                         </select>
@@ -89,13 +89,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="staticPrime" class="col-md-4 col-form-label">Estimation Prime</label>
+                    <div class="col-md-4">
+                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" [value]="mission.prime">
+                    </div>
+                    <div class="col-md-4">
+                        <p>€</p>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
 <div class="modal-footer">
-    <button 
-    [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee " type="button" class="btn btn-outline-dark" (click)="modifierMission(mission);activeModal.close('Close click')">Modifier</button>
+    <button
+        [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee "
+        type="button" class="btn btn-outline-dark"
+        (click)="modifierMission(mission);activeModal.close('Close click')">Modifier</button>
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>

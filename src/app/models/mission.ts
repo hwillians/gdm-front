@@ -1,5 +1,3 @@
-import { Frais } from './frais';
-
 export class Mission {
 
     constructor(public id: number,

@@ -19,6 +19,9 @@ import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mi
 import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
 
 
+import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
+
+
 
 
 @NgModule({
@@ -33,11 +36,10 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
     ModificationMissionComponent,
     AjoutNatureComponent,
     SaisieNatureComponent,
-
     SupprimerNatureComponent,
     ModifierNatureComponent,
+    ValidationMissionComponent
 
-    SupprimerNatureComponent
 
 
   ],

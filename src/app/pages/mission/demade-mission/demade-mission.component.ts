@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct, NgbInputDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Collegue } from 'src/app/auth/auth.domains';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -21,39 +21,50 @@ import { NatureService } from 'src/app/services/nature.service';
 
 export class DemadeMissionComponent implements OnInit {
 
+
   mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
-
-  constructor(private authService: AuthService,
-    public activeModal: NgbActiveModal,
-    public natureService: NatureService,
-    private calendar: NgbCalendar,
-    private missionService: MissionService,
-    public formatter: NgbDateParserFormatter) {
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  }
-
   diff: number = 1
   listTransport = [
     { type: 'Avion', delay: 7 },
     { type: 'Covoiturage', delay: 1 },
     { type: 'Train', delay: 1 },
     { type: 'Voiture de service', delay: 1 }]
-
   collegue: Collegue;
-
   erreurTechnique: boolean;
+  dateTemoin = new Date();
 
+  constructor(private authService: AuthService,
+    public activeModal: NgbActiveModal,
+    public natureService: NatureService,
+    private calendar: NgbCalendar,
+    private missionService: MissionService,
+  ) {  }
 
+  parseDate(date: Date) {
+    let st = date.toString().split("-")
+    return date ? st[2] + "-" + st[1] + "-" + st[0]:null
+  }
 
+  dateDebutValid(): boolean {
+    if (this.mission.dateDebut < this.dateTemoin) {
+      return false
+    }
+    return true
+  }
 
   demanderMission() {
-    this.missionService.demanderMission(this.collegue.id, this.mission).subscribe()
+    this.missionService.demanderMission(this.collegue.id, 
+      new Mission(this.mission.id, 
+        new Date(this.parseDate(this.mission.dateDebut)), 
+        new Date(this.parseDate(this.mission.dateFin)), 
+        this.mission.nomNature, 
+        this.mission.villeDepart,
+        this.mission.villeArrivee,
+        this.mission.transport,
+        null,
+        0)).subscribe()
   }
 
   ngOnInit(): void {
@@ -68,6 +79,7 @@ export class DemadeMissionComponent implements OnInit {
     this.mission = new Mission(1, null, null, null, null, null, null, "", 0)
 
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
+    this.dateTemoin.setDate(this.dateTemoin.getDate() + 7)
 
   }
 }

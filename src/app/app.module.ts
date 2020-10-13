@@ -16,6 +16,7 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
+import { GestionFraisComponent } from './gestion-frais/gestion-frais.component';
 
 
 
@@ -32,7 +33,8 @@ import { ValidationMissionComponent } from './pages/validation-mission/validatio
     AjoutNatureComponent,
     SaisieNatureComponent,
     SupprimerNatureComponent,
-    ValidationMissionComponent
+    ValidationMissionComponent,
+    GestionFraisComponent
 
   ],
   imports: [

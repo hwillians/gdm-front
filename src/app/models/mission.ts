@@ -1,4 +1,8 @@
+import { Collegue } from '../auth/auth.domains';
+
 export class Mission {
+
+    collegue: Collegue; // test avec un collegue
 
     constructor(public id: number,
         public dateDebut: Date,
@@ -8,7 +12,8 @@ export class Mission {
         public villeArrivee: string,
         public transport: string,
         public statut: string,
-        public prime: any) { }
+        public prime: any
+        ) { } 
 }
 
 

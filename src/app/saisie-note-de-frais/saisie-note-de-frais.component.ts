@@ -13,7 +13,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
   //il faudra recuperer la vrai mission plus tard
-  mission: Mission = new Mission(3, new Date("2020-01-01"), new Date("2020-01-03"), null, null, null, null, null, null);
+  mission: Mission = new Mission(1, new Date("2020-01-01"), new Date("2020-01-03"), null, null, null, null, null, null);
 
   listfrais: Frais[]
   erreurTechnique = false;
@@ -156,7 +156,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
       if (frais.new) {
         nbFraisAjoutes ++;
         // TODO mettre à jour l'id de la mission automatiquement
-        this.fraisService.creerFrais(3, frais).subscribe(res => {
+        this.fraisService.creerFrais(1, frais).subscribe(res => {
           frais.new = false;
         });
       } else if (frais.modified) {
@@ -167,7 +167,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
         });
       }
     });
-    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifiés' );
+    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifié(s)' );
     window.location.reload();
 
   }

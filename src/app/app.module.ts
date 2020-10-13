@@ -7,7 +7,7 @@ import {TechComponent} from './tech/tech.component';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
+import { SaisieNoteDeFraisComponent } from './frais/saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GestionMissionComponent } from './pages/mission/gestion-mission/gestion-mission.component';
@@ -16,7 +16,7 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
-import { GestionFraisComponent } from './gestion-frais/gestion-frais.component';
+import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
 
 
 

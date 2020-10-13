@@ -1,6 +1,3 @@
-<h1>Liste des missions</h1>
-<app-gestion-frais></app-gestion-frais>
-
 <div class="container">
     <h1>Saisie des notes de frais</h1>
 
@@ -8,22 +5,22 @@
         <tbody>
             <tr>
                 <th scope="row">Date de début</th>
-                <td>22/05/2017</td>
+                <td>{{mission.dateDebut |date:'dd/MM/yyyy'}}</td>
                 <th scope="row">Estimation Prime</th>
-                <td>2100€</td>
+                <td>????</td>
 
             </tr>
             <tr>
                 <th scope="row">Date de fin</th>
-                <td>26/05/2017</td>
+                <td>{{mission.dateFin |date:'dd/MM/yyyy'}}</td>
                 <th scope="row">Ville de départ</th>
-                <td>Nates</td>
+                <td>{{mission.villeDepart}}</td>
             </tr>
             <tr>
                 <th scope="row">Nature</th>
-                <td>Conseil</td>
+                <td>{{mission.nomNature}}</td>
                 <th scope="row">Ville d'arrivée</th>
-                <td>Lyon</td>
+                <td>{{mission.villeArrivee}}</td>
             </tr>
         </tbody>
     </table>

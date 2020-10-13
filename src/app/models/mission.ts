@@ -1,8 +1,5 @@
-import { Collegue } from '../auth/auth.domains';
-
 export class Mission {
 
-    collegue: Collegue; // test avec un collegue
 
     constructor(public id: number,
         public dateDebut: Date,

@@ -8,8 +8,9 @@ import { GestionMissionComponent } from './pages/mission/gestion-mission/gestion
 import { PlannigMissionComponent } from './pages/plannig-mission/plannig-mission.component';
 import { PrimesComponent } from './pages/primes/primes.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
-import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
+import { SaisieNoteDeFraisComponent } from './frais/saisie-note-de-frais/saisie-note-de-frais.component';
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
+import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
 
 const routes: Routes = [
   { path: 'connection', component: AuthComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'gestion-mission', component: GestionMissionComponent },
   { path: 'planning-mission', component: PlannigMissionComponent },
   { path: 'primes', component: PrimesComponent },
-  { path: 'notes-frais', component: SaisieNoteDeFraisComponent },
+  { path: 'gestion-frais', component: GestionFraisComponent },
+  { path: 'notes-frais/:id', component: SaisieNoteDeFraisComponent },
   { path: 'validation-mission', component: ValidationMissionComponent },
 
   { path: 'natures', component: SaisieNatureComponent },

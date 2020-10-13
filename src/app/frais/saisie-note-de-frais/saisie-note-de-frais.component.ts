@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Frais } from '../models/frais';
-import { Mission } from '../models/mission';
-import { FraisService } from '../services/frais.service';
+import { Frais } from '../../models/frais';
+import { Mission } from '../../models/mission';
+import { FraisService } from '../../services/frais.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
+import { MissionService } from 'src/app/services/mission.service';
 
 @Component({
   selector: 'app-saisie-note-de-frais',
@@ -12,8 +14,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class SaisieNoteDeFraisComponent implements OnInit {
 
 
-  //il faudra recuperer la vrai mission plus tard
-  mission: Mission = new Mission(1, new Date("2020-01-01"), new Date("2020-01-03"), null, null, null, null, null, null);
+  public mission: Mission;
+  missionId: number;
 
   listfrais: Frais[]
   erreurTechnique = false;
@@ -26,17 +28,36 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
 
-  constructor(private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(private missionService: MissionService, private route: ActivatedRoute, private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {      
+      this.missionId = params['id'];
+      this.getMission();
+    });
+    
+  }
+
+  // récupère une mission
+  getMission () {
+    this.missionService.getMission(this.missionId).subscribe (res => {
+      this.mission = res;
+      console.log(this.mission);
+      
+      this.getListeNotesDeFrais();
+    })
+  }
+
+  // récupère les frais correspondant à la mission
+  getListeNotesDeFrais () {
     this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
       listf => this.listfrais = listf,
       error => this.erreurTechnique = true,
       () => { }
-    )
+    );
   }
 
   /// modal
@@ -64,11 +85,13 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
   /// fin modal
 
+  // vérification date comprise dans les dates de la mission
   dateIsValide(date: Date): boolean {
     return new Date(date) >= new Date(this.mission.dateDebut) &&
       new Date(date) <= new Date(this.mission.dateFin)
   }
 
+  // vérification que le couple date/nature est unique
   fraisIsUnique(frais: Frais, indexExclusion:number): boolean {
     var isUnique = true;
     for (let i = 0; i < this.listfrais.length; ++i) {
@@ -155,12 +178,13 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     this.listfrais.forEach(frais => {
       if (frais.new) {
         nbFraisAjoutes ++;
-        // TODO mettre à jour l'id de la mission automatiquement
-        this.fraisService.creerFrais(1, frais).subscribe(res => {
+        // ajout du frais en base
+        this.fraisService.creerFrais(this.mission.id, frais).subscribe(res => {
           frais.new = false;
         });
       } else if (frais.modified) {
         nbFraisModifies ++;
+        // modification du frais en base
         this.fraisService.modifierFrais(frais).subscribe(res => {
           frais.modified = false;
 
@@ -171,12 +195,6 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     window.location.reload();
 
   }
-
-
-
-
-
-
 
 
 }

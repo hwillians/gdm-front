@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Nature } from 'src/app/models/nature';
 import { NatureService } from 'src/app/services/nature.service';
@@ -9,7 +9,8 @@ import { NatureService } from 'src/app/services/nature.service';
   styleUrls: ['./supprimer-nature.component.scss']
 })
 export class SupprimerNatureComponent implements OnInit {
-
+  
+  @Input()
   nature: Nature = new Nature();
 
   

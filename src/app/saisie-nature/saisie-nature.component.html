@@ -28,8 +28,8 @@
           <td>{{nature.plafondDepassable ? 'OUI' : 'NON'}}</td>
           <td>
             
-            <app-supprimer-nature (click)="delete(nature)"></app-supprimer-nature>
-            <app-modifier-nature></app-modifier-nature>
+            <app-supprimer-nature [nature]="nature"></app-supprimer-nature>
+            <app-modifier-nature [nature]="nature"></app-modifier-nature>
           </td>
         </tr>
       </tbody>

@@ -10,5 +10,6 @@ export class Nature {
     plafondDepassable: boolean;
     debutValidite: Date;
     finValidite: Date;
+  
 
 }

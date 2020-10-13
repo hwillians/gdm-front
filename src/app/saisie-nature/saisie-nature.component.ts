@@ -14,18 +14,7 @@ export class SaisieNatureComponent implements OnInit {
 
   constructor(private NatureService:NatureService) { }
 
-  
 
-  delete(nature:Nature):void{
-    this.NatureService.deleteNature(nature.id).subscribe(()=> {},
-    err => console.log(err)
-      
-    );
-  }
-
-  editerNature(){
-    alert('une nature de mission sera modifiée')
-  }
 
   ngOnInit(): void {
 

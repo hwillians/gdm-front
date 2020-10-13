@@ -14,19 +14,19 @@ import { NatureService } from 'src/app/services/nature.service';
   templateUrl: './demade-mission.component.html',
   styleUrls: ['./demade-mission.component.scss'],
   providers: [
-    {provide: NgbDateAdapter, useClass: CustomAdapter},
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
   ]
 })
 
 export class DemadeMissionComponent implements OnInit {
 
-  mission: Mission = new Mission(1, null, null, null, null, null, null, null, null)
- 
+  mission: Mission 
+
   listNature: Nature[]
   dateMin: NgbDate
- 
-  min : Date 
+
+  min: Date
   diff: number = 1
   listTransport = [
     { type: 'Avion', delay: 7 },
@@ -35,32 +35,32 @@ export class DemadeMissionComponent implements OnInit {
     { type: 'Voiture de service', delay: 1 }]
 
   collegue: Collegue;
-  
+
   erreurTechnique: boolean;
 
 
-  constructor(private authService:AuthService, public activeModal: NgbActiveModal, public natureService: NatureService, private ngbCalendar: NgbCalendar, private missionService:MissionService) {
-  
-  
-   }
+  constructor(private authService: AuthService, public activeModal: NgbActiveModal, public natureService: NatureService, private ngbCalendar: NgbCalendar, private missionService: MissionService) {
 
-   demanderMission(){
-    this.missionService.demanderMission(this.collegue.id,this.mission).subscribe()
-   }
+
+  }
+
+  demanderMission() {
+    this.missionService.demanderMission(this.collegue.id, this.mission).subscribe()
+  }
 
   ngOnInit(): void {
     this.natureService.listeNatures().subscribe(
-      listN => this.listNature = listN,  
+      listN => this.listNature = listN,
     )
 
     this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
       () => this.authService.collegueConnecteObs.subscribe(),
-        () => this.erreurTechnique = true,
-      )
-    
-    
+      () => this.erreurTechnique = true,
+    )
+this.mission = new Mission(1, null,  null, null, null, null, null, null, null)
+
     this.dateMin = new NgbDate(this.ngbCalendar.getToday().year, this.ngbCalendar.getToday().month, this.ngbCalendar.getToday().day + this.diff)
-  this.min = new Date(this.dateMin.year,this.dateMin.month,this.dateMin.day)
+    this.min = new Date(this.dateMin.year, this.dateMin.month, this.dateMin.day)
   }
 }
 

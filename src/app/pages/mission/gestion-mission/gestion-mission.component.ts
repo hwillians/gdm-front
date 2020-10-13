@@ -22,7 +22,7 @@ export class GestionMissionComponent implements OnInit {
 
   constructor(private missionService: MissionService, private authService: AuthService, private modalService: NgbModal) { }
 
-  open() {
+  demanderMission() {
     const modalRef = this.modalService.open(DemadeMissionComponent);
     modalRef.componentInstance.name = 'app-demade-mission';
   }

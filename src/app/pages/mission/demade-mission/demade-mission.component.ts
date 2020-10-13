@@ -21,12 +21,23 @@ import { NatureService } from 'src/app/services/nature.service';
 
 export class DemadeMissionComponent implements OnInit {
 
-  mission: Mission 
-
+  mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
 
-  min: Date
+  constructor(private authService: AuthService,
+    public activeModal: NgbActiveModal,
+    public natureService: NatureService,
+    private calendar: NgbCalendar,
+    private missionService: MissionService,
+    public formatter: NgbDateParserFormatter) {
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
   diff: number = 1
   listTransport = [
     { type: 'Avion', delay: 7 },
@@ -39,10 +50,7 @@ export class DemadeMissionComponent implements OnInit {
   erreurTechnique: boolean;
 
 
-  constructor(private authService: AuthService, public activeModal: NgbActiveModal, public natureService: NatureService, private ngbCalendar: NgbCalendar, private missionService: MissionService) {
 
-
-  }
 
   demanderMission() {
     this.missionService.demanderMission(this.collegue.id, this.mission).subscribe()
@@ -57,10 +65,10 @@ export class DemadeMissionComponent implements OnInit {
       () => this.authService.collegueConnecteObs.subscribe(),
       () => this.erreurTechnique = true,
     )
-this.mission = new Mission(1, null,  null, null, null, null, null, null, null)
+    this.mission = new Mission(1, null, null, null, null, null, null, "", 0)
 
-    this.dateMin = new NgbDate(this.ngbCalendar.getToday().year, this.ngbCalendar.getToday().month, this.ngbCalendar.getToday().day + this.diff)
-    this.min = new Date(this.dateMin.year, this.dateMin.month, this.dateMin.day)
+    this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
+
   }
 }
 

@@ -6,7 +6,7 @@ import {AuthComponent} from './auth/auth.component';
 import {TechComponent} from './tech/tech.component';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,7 @@ import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mi
 import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
 
 
 
@@ -30,7 +31,8 @@ import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/suppr
     ModificationMissionComponent,
     AjoutNatureComponent,
     SaisieNatureComponent,
-    SupprimerNatureComponent
+    SupprimerNatureComponent,
+    ValidationMissionComponent
 
   ],
   imports: [
@@ -38,7 +40,8 @@ import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/suppr
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

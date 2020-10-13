@@ -49,10 +49,9 @@ export class ModificationMissionComponent implements OnInit {
       
   }
 
-
   ngOnInit(): void {
 
-    
+  
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     )

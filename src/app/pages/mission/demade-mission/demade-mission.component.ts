@@ -54,7 +54,7 @@ export class DemadeMissionComponent implements OnInit {
       }
     
       setVilleDepart(event){
-        this.mission.villeDepart = event.name
+        this.mission.villeArrivee = event.name
           }
 
   parseDate(date: Date) {

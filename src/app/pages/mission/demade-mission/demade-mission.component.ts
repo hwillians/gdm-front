@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbModal,} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbModal, } from '@ng-bootstrap/ng-bootstrap';
 import { Collegue } from 'src/app/auth/auth.domains';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CustomAdapter } from 'src/app/models/custom-adapter';
@@ -21,41 +21,39 @@ import { NatureService } from 'src/app/services/nature.service';
 })
 
 export class DemadeMissionComponent implements OnInit {
-  
 
   mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
-  link= "/gestion-mission"
+  link = "/gestion-mission"
   today = new Date()
   dateTemoin = new Date();
-
 
   diff: number = 1
   listTransport = [
     { type: 'Avion' },
-    { type: 'Covoiturage'},
-    { type: 'Train'},
+    { type: 'Covoiturage' },
+    { type: 'Train' },
     { type: 'Voiture de service' }]
   collegue: Collegue;
   erreurTechnique = false;
-  message:string
+  message: string
 
   constructor(private authService: AuthService,
     public natureService: NatureService,
     private calendar: NgbCalendar,
     private missionService: MissionService,
     private modalService: NgbModal,
-    private router :Router
-  ) {   }
+    private router: Router
+  ) { }
 
-  setVilleArrivee(event){
+  setVilleArrivee(event) {
     this.mission.villeDepart = event.name
-      }
-    
-      setVilleDepart(event){
-        this.mission.villeArrivee = event.name
-          }
+  }
+
+  setVilleDepart(event) {
+    this.mission.villeArrivee = event.name
+  }
 
   parseDate(date: Date) {
     let st = date.toString().split("-")
@@ -63,17 +61,18 @@ export class DemadeMissionComponent implements OnInit {
   }
 
   openVerticallyCentered(content: any) {
-    this.modalService.open(content, { centered: true });}
+    this.modalService.open(content, { centered: true });
+  }
 
 
   demanderMission(content: any) {
     if (this.mission.dateDebut > this.mission.dateFin) {
-      this.openVerticallyCentered(content) 
-      this.message="la date de fin doit être supérieure ou égale à la date de début"     
-    }else if(this.mission.transport==="Avion" && new Date(this.parseDate(this.mission.dateDebut))<this.dateTemoin){
-      this.openVerticallyCentered(content) 
-      this.message= "Pour les deplacement en avion une anticipation de 7 jours est exigée"
-    } else {   
+      this.openVerticallyCentered(content)
+      this.message = "la date de fin doit être supérieure ou égale à la date de début"
+    } else if (this.mission.transport === "Avion" && new Date(this.parseDate(this.mission.dateDebut)) < this.dateTemoin) {
+      this.openVerticallyCentered(content)
+      this.message = "Pour les deplacement en avion une anticipation de 7 jours est exigée"
+    } else {
       this.missionService.demanderMission(this.collegue.id,
         new Mission(this.mission.id,
           new Date(this.parseDate(this.mission.dateDebut)),
@@ -84,24 +83,27 @@ export class DemadeMissionComponent implements OnInit {
           this.mission.transport,
           null,
           0)).subscribe(
-            mission =>{
+            mission => {
 
-this.mission=null;
-this.router.navigateByUrl("/gestion-mission")
-            } ,
+              this.mission = null;
+              this.router.navigateByUrl("/gestion-mission")
+            },
             error => this.erreurTechnique = true
           )
     }
   }
 
   ngOnInit(): void {
-    this.dateTemoin.setDate(this.today.getDate()+7)
+    this.dateTemoin.setDate(this.today.getDate() + 7)
+
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     )
+
     this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
       () => this.authService.collegueConnecteObs.subscribe()
     )
+
     this.mission = new Mission(1, null, null, null, null, null, null, null, 0)
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
   }

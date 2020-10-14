@@ -16,6 +16,7 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
+import {NgxAutocomPlaceModule} from 'ngx-autocom-place';
 
 
 
@@ -40,7 +41,7 @@ import { ValidationMissionComponent } from './pages/validation-mission/validatio
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule, NgxAutocomPlaceModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

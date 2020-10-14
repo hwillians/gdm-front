@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct, NgbInputDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbModal,} from '@ng-bootstrap/ng-bootstrap';
 import { Collegue } from 'src/app/auth/auth.domains';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CustomAdapter } from 'src/app/models/custom-adapter';
@@ -20,67 +21,88 @@ import { NatureService } from 'src/app/services/nature.service';
 })
 
 export class DemadeMissionComponent implements OnInit {
-
+  
 
   mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
-  
-  diff: number = 1
-  listTransport = [
-    { type: 'Avion', delay: 7 },
-    { type: 'Covoiturage', delay: 1 },
-    { type: 'Train', delay: 1 },
-    { type: 'Voiture de service', delay: 1 }]
-  collegue: Collegue;
-  erreurTechnique: boolean;
+  link= "/gestion-mission"
+  today = new Date()
   dateTemoin = new Date();
 
+
+  diff: number = 1
+  listTransport = [
+    { type: 'Avion' },
+    { type: 'Covoiturage'},
+    { type: 'Train'},
+    { type: 'Voiture de service' }]
+  collegue: Collegue;
+  erreurTechnique = false;
+  message:string
+
   constructor(private authService: AuthService,
-    public activeModal: NgbActiveModal,
     public natureService: NatureService,
     private calendar: NgbCalendar,
     private missionService: MissionService,
-  ) {  }
+    private modalService: NgbModal,
+    private router :Router
+  ) {   }
+
+  setVilleArrivee(event){
+    this.mission.villeDepart = event.name
+      }
+    
+      setVilleDepart(event){
+        this.mission.villeDepart = event.name
+          }
 
   parseDate(date: Date) {
     let st = date.toString().split("-")
-    return date ? st[2] + "-" + st[1] + "-" + st[0]:null
+    return date ? st[2] + "-" + st[1] + "-" + st[0] : null
   }
 
-  dateDebutValid(): boolean {
-    if (this.mission.dateDebut < this.dateTemoin) {
-      return false
+  openVerticallyCentered(content: any) {
+    this.modalService.open(content, { centered: true });}
+
+
+  demanderMission(content: any) {
+    if (this.mission.dateDebut > this.mission.dateFin) {
+      this.openVerticallyCentered(content) 
+      this.message="la date de fin doit être supérieure ou égale à la date de début"     
+    }else if(this.mission.transport==="Avion" && new Date(this.parseDate(this.mission.dateDebut))<this.dateTemoin){
+      this.openVerticallyCentered(content) 
+      this.message= "Pour les deplacement en avion une anticipation de 7 jours est exigée"
+    } else {   
+      this.missionService.demanderMission(this.collegue.id,
+        new Mission(this.mission.id,
+          new Date(this.parseDate(this.mission.dateDebut)),
+          new Date(this.parseDate(this.mission.dateFin)),
+          this.mission.nomNature,
+          this.mission.villeDepart,
+          this.mission.villeArrivee,
+          this.mission.transport,
+          null,
+          0)).subscribe(
+            mission =>{
+
+this.mission=null;
+this.router.navigateByUrl("/gestion-mission")
+            } ,
+            error => this.erreurTechnique = true
+          )
     }
-    return true
-  }
-
-  demanderMission() {
-    this.missionService.demanderMission(this.collegue.id, 
-      new Mission(this.mission.id, 
-        new Date(this.parseDate(this.mission.dateDebut)), 
-        new Date(this.parseDate(this.mission.dateFin)), 
-        this.mission.nomNature, 
-        this.mission.villeDepart,
-        this.mission.villeArrivee,
-        this.mission.transport,
-        null,
-        0)).subscribe()
   }
 
   ngOnInit(): void {
+    this.dateTemoin.setDate(this.today.getDate()+7)
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     )
-
     this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
-      () => this.authService.collegueConnecteObs.subscribe(),
-      () => this.erreurTechnique = true,
+      () => this.authService.collegueConnecteObs.subscribe()
     )
     this.mission = new Mission(1, null, null, null, null, null, null, null, 0)
-
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
-    this.dateTemoin.setDate(this.dateTemoin.getDate() + 7)
-
   }
 }

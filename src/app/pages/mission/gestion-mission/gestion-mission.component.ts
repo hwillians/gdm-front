@@ -18,16 +18,15 @@ export class GestionMissionComponent implements OnInit {
   listMission: Mission[]
   erreurTechnique = false
 
-  editable = false
-
   constructor(private missionService: MissionService, private authService: AuthService, private modalService: NgbModal) { }
 
   demanderMission() {
-    const modalRef = this.modalService.open(DemadeMissionComponent);
-    modalRef.componentInstance.name = 'app-demade-mission';
+
   }
 
   supprimerMission() {
+    const modalRef = this.modalService.open(DemadeMissionComponent);
+    modalRef.componentInstance.name = 'app-demade-mission';
     alert('la mission sera supprimée')
   }
 

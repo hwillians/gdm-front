@@ -31,9 +31,19 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   constructor(private missionService: MissionService, private route: ActivatedRoute, private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
+    //this.missionService.abonnerMissionSelectionne().subscribe(mission=>this.mission=mission)
   }
 
   ngOnInit(): void {
+    // this.mission = this.missionService.missionSelectionnee;
+    // this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
+    //   listf => {
+    //     this.listfrais = listf;
+    //     console.log(this.listfrais)
+    //   },
+    //   error => this.erreurTechnique = true,
+    //   () => { }
+    // );
     this.route.params.subscribe(params => {      
       this.missionId = params['id'];
       this.getMission();
@@ -41,7 +51,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     
   }
 
-  // récupère une mission
+  //récupère une mission
   getMission () {
     this.missionService.getMission(this.missionId).subscribe (res => {
       this.mission = res;
@@ -49,9 +59,10 @@ export class SaisieNoteDeFraisComponent implements OnInit {
       
       this.getListeNotesDeFrais();
     })
+
   }
 
-  // récupère les frais correspondant à la mission
+  // //récupère les frais correspondant à la mission
   getListeNotesDeFrais () {
     this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
       listf => this.listfrais = listf,
@@ -179,8 +190,10 @@ export class SaisieNoteDeFraisComponent implements OnInit {
       if (frais.new) {
         nbFraisAjoutes ++;
         // ajout du frais en base
+        console.log('ajout frais :', frais);        
         this.fraisService.creerFrais(this.mission.id, frais).subscribe(res => {
           frais.new = false;
+          console.log('Ajout réussi');
         });
       } else if (frais.modified) {
         nbFraisModifies ++;

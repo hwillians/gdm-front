@@ -2,12 +2,12 @@
     <h1>Saisie des notes de frais</h1>
 
     <table class="table">
-        <tbody>
+        <tbody *ngIf="mission">
             <tr>
                 <th scope="row">Date de début</th>
                 <td>{{mission.dateDebut |date:'dd/MM/yyyy'}}</td>
                 <th scope="row">Estimation Prime</th>
-                <td>????</td>
+                <td>{{mission.prime}}</td>
 
             </tr>
             <tr>

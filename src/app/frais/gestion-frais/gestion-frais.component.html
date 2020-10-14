@@ -9,6 +9,7 @@
             <th scope="col">Ville d'arrivée</th>
             <th scope="col">Transport</th>
             <th scope="col">Frais</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -20,9 +21,10 @@
                 <td>{{mission.villeDepart}}</td>
                 <td>{{mission.villeArrivee}}</td>
                 <td>{{mission.transport}}</td>
+                <td>{{fraisInitial}}€</td>
                 <td>
-                    <button type="button" class="btn btn-outline-primary" [routerLink]="['/notes-frais', mission.id]">+</button>
-                    <button type="button" class="btn btn-outline-primary">pdf</button>
+                    <button [disabled]="!isMissionEchue(mission)" type="button" class="btn btn-outline-primary" [routerLink]="['/notes-frais', mission.id]">+</button>
+                    <button [disabled]="!isMissionEchue(mission)" type="button" class="btn btn-outline-primary">pdf</button>
                 </td>
             </ng-template>
         </tr>

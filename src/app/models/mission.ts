@@ -1,6 +1,5 @@
 export class Mission {
 
-
     constructor(public id: number,
         public dateDebut: Date,
         public dateFin: Date,

@@ -23,6 +23,8 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   fraisAModifier: Frais;
   indexAModifier: number;
   indexASupprimer: number;
+  deduction: number;
+  totalFrais: number;
 
   fraisCree: Frais = new Frais;
 
@@ -31,19 +33,9 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   constructor(private missionService: MissionService, private route: ActivatedRoute, private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
-    //this.missionService.abonnerMissionSelectionne().subscribe(mission=>this.mission=mission)
   }
 
   ngOnInit(): void {
-    // this.mission = this.missionService.missionSelectionnee;
-    // this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
-    //   listf => {
-    //     this.listfrais = listf;
-    //     console.log(this.listfrais)
-    //   },
-    //   error => this.erreurTechnique = true,
-    //   () => { }
-    // );
     this.route.params.subscribe(params => {      
       this.missionId = params['id'];
       this.getMission();

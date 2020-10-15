@@ -9,28 +9,8 @@ import { Mission } from '../models/mission';
 })
 export class MissionService {
 
-  // public missionSelectionnee: Mission;
-  // subjectMissionSelectionne = new Subject<Mission>()
-
-  // publierMission(mission: Mission): void {
-  //   console.log(mission);
-  //   localStorage.setItem('mission', JSON.stringify(mission));
-  //   this.missionSelectionnee = mission;
-  //   this.subjectMissionSelectionne.next(mission); 
-  // }
-
-  // abonnerMissionSelectionne(): Observable<Mission> {    
-  //   return this.subjectMissionSelectionne.asObservable();
-  // }
-
-
 
   constructor(private http: HttpClient) { 
-    // let missionLocal = localStorage.getItem('mission');
-    // if (missionLocal) {
-    //   this.missionSelectionnee = JSON.parse(missionLocal);
-    //   console.log(this.missionSelectionnee);
-   // }
   }
 
   listeMissions(idCollegue: number): Observable<Mission[]> {

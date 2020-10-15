@@ -15,7 +15,7 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 
 const routes: Routes = [
   { path: 'connection', component: AuthComponent },
-  { path: 'accueil', component: AccueilComponent },
+  { path: 'accueil', component: AccueilComponent , canActivate: [StatutConnecteService] },
   { path: 'gestion-mission', component: GestionMissionComponent , canActivate: [StatutConnecteService] },
   { path: 'demande-mission', component: DemadeMissionComponent , canActivate: [StatutConnecteService] },
   { path: 'modification-mission/:idMission', component: ModificationMissionComponent, canActivate: [StatutConnecteService]  },

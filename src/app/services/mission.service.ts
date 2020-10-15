@@ -46,7 +46,9 @@ export class MissionService {
     return this.http.delete<Mission[]>(`${environment.baseUrl}missions/${id}`)
   }
 
-  
+  traitementNuit(){
+    return this.http.patch(`${environment.baseUrl}missions/nuit`,null)
+  }
   getMission(id: number): Observable<Mission>{
     return this.http.get<Mission>(`${environment.baseUrl}missions?id=${id}`);
   }

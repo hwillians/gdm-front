@@ -17,6 +17,7 @@ import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.
 import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
 import { NgxAutocomPlaceModule } from 'ngx-autocom-place';
+import { PrimesComponent } from './pages/primes/primes.component';
 
 
 
@@ -33,7 +34,8 @@ import { NgxAutocomPlaceModule } from 'ngx-autocom-place';
     AjoutNatureComponent,
     SaisieNatureComponent,
     SupprimerNatureComponent,
-    ValidationMissionComponent
+    ValidationMissionComponent,
+    PrimesComponent
 
   ],
   imports: [

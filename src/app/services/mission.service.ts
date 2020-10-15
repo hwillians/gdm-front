@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Mission } from '../models/mission';
 
@@ -29,6 +29,10 @@ export class MissionService {
 
   validationMission(idMission: number, valide: boolean, idManager: number): Observable<Mission[]> {
     return this.http.patch<Mission[]>(`${environment.baseUrl}missions/manager/${idManager}`, { "id": idMission, "valide": valide })
+  }
+
+  getMission(id: number): Observable<Mission>{
+    return this.http.get<Mission>(`${environment.baseUrl}missions?id=${id}`);
   }
 
 }

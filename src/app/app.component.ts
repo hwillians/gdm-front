@@ -13,7 +13,7 @@ export class AppComponent {
 
   links = [
     { title: 'Accueil', fragment: '1', lien: '/accueil' },
-    { title: 'Saisie note de frais', fragment: '2', lien: '/notes-frais' },
+    { title: 'Saisie note de frais', fragment: '2', lien: '/gestion-frais' },
     { title: 'Gestion des missions', fragment: '3', lien: '/gestion-mission' },
     { title: 'Planning des missions', fragment: '4', lien: '/planning-mission' },
     { title: 'Primes', fragment: '5', lien: '/primes' },

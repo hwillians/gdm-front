@@ -25,7 +25,6 @@ export class DemadeMissionComponent implements OnInit {
   mission: Mission
   listNature: Nature[]
   dateMin: NgbDate
-  link = "/gestion-mission"
   today = new Date()
   dateTemoin = new Date();
 
@@ -38,6 +37,7 @@ export class DemadeMissionComponent implements OnInit {
   collegue: Collegue;
   erreurTechnique = false;
   message: string
+  listMission: Mission[]
 
   constructor(private authService: AuthService,
     public natureService: NatureService,
@@ -47,36 +47,52 @@ export class DemadeMissionComponent implements OnInit {
     private router: Router
   ) { }
 
-  setVilleArrivee(event) {
+  setVilleArrivee(event: { name: string; }) {
     this.mission.villeDepart = event.name
   }
 
-  setVilleDepart(event) {
+  setVilleDepart(event: { name: string; }) {
     this.mission.villeArrivee = event.name
   }
 
-  parseDate(date: Date) {
+  parseDate(date: Date): Date {
     let st = date.toString().split("-")
-    return date ? st[2] + "-" + st[1] + "-" + st[0] : null
+    return new Date(date ? st[2] + "-" + st[1] + "-" + st[0] : null)
   }
 
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
 
+  siChevauche(dateDebut: Date, dateFin: Date): Boolean {
+    for (let mission of this.listMission) {
+      if (dateDebut >= new Date(mission.dateDebut) || dateFin <= new Date(mission.dateFin)) {
+        return true
+      }
+    }
+  }
 
   demanderMission(content: any) {
     if (this.mission.dateDebut > this.mission.dateFin) {
       this.openVerticallyCentered(content)
       this.message = "la date de fin doit être supérieure ou égale à la date de début"
-    } else if (this.mission.transport === "Avion" && new Date(this.parseDate(this.mission.dateDebut)) < this.dateTemoin) {
+    } else if (this.mission.transport === "Avion" && this.parseDate(this.mission.dateDebut) < this.dateTemoin) {
       this.openVerticallyCentered(content)
       this.message = "Pour les deplacement en avion une anticipation de 7 jours est exigée"
+    } else if (this.siChevauche(this.parseDate(this.mission.dateDebut), this.parseDate(this.mission.dateFin))) {
+      this.openVerticallyCentered(content);
+      this.message = "Cette mission chevauche une autre mission ou un congé";
+    } else if (this.parseDate(this.mission.dateDebut).getDay() === 6 || this.parseDate(this.mission.dateDebut).getDay() === 7) {
+      this.openVerticallyCentered(content);
+      this.message = "la mission ne peut pas commencer un jour non travaillé";
+    } else if (this.parseDate(this.mission.dateFin).getDay() === 6 || this.parseDate(this.mission.dateFin).getDay() === 7) {
+      this.openVerticallyCentered(content);
+      this.message = "la mission ne peut pas finir un jour non travaillé";
     } else {
       this.missionService.demanderMission(this.collegue.id,
         new Mission(this.mission.id,
-          new Date(this.parseDate(this.mission.dateDebut)),
-          new Date(this.parseDate(this.mission.dateFin)),
+          this.parseDate(this.mission.dateDebut),
+          this.parseDate(this.mission.dateFin),
           this.mission.nomNature,
           this.mission.villeDepart,
           this.mission.villeArrivee,
@@ -84,7 +100,6 @@ export class DemadeMissionComponent implements OnInit {
           null,
           0)).subscribe(
             mission => {
-
               this.mission = null;
               this.router.navigateByUrl("/gestion-mission")
             },
@@ -94,17 +109,24 @@ export class DemadeMissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dateTemoin.setDate(this.today.getDate() + 7)
+    this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
+      () => this.authService.collegueConnecteObs.subscribe(),
+      () => this.missionService.listeMissions(this.collegue.id).subscribe(
+        listM => this.listMission = listM,
+        () => this.erreurTechnique = true,
+      )
+    )
 
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
-    )
+    );
 
     this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
       () => this.authService.collegueConnecteObs.subscribe()
-    )
+    );
 
-    this.mission = new Mission(1, null, null, null, null, null, null, null, 0)
+    this.dateTemoin.setDate(this.today.getDate() + 7);
+    this.mission = new Mission(1, null, null, null, null, null, null, null, 0);
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
-  }
+  };
 }

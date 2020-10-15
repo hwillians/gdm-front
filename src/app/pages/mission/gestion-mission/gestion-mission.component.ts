@@ -20,18 +20,18 @@ export class GestionMissionComponent implements OnInit {
     private missionService: MissionService,
     private authService: AuthService,
     private router: Router) {
-      
-     }
+
+  }
 
   demanderMission() {
   }
 
   editerMission(mission: Mission) {
-    this.router.navigateByUrl("/modification-mission/"+mission.id)
+    this.router.navigateByUrl("/modification-mission/" + mission.id)
   }
 
-  supprimerMission() {
-    alert('la mission sera supprimée')
+  supprimerMission(id:number) {
+   this.missionService.supprimerMission(id).subscribe(listM=>this.listMission=listM)
   }
 
   ngOnInit(): void {

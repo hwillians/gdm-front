@@ -92,13 +92,10 @@
     </div>
 </div>
 
-
-
 <button
     [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee "
     type="button" class="btn btn-outline-dark" (click)="modifierMission(mission,content)">Modifier</button>
     <button type="button" class="btn btn-outline-dark" routerLink="/gestion-mission">Annuler</button>
-
 
 <ng-template #content let-modal>
     <div class="modal-header">

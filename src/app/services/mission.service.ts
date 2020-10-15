@@ -42,8 +42,15 @@ export class MissionService {
     return this.http.patch<Mission[]>(`${environment.baseUrl}missions/manager/${idManager}`, { "id": idMission, "valide": valide })
   }
 
+  supprimerMission(id:number):Observable<Mission[]> {
+    return this.http.delete<Mission[]>(`${environment.baseUrl}missions/${id}`)
+  }
+
+  
   getMission(id: number): Observable<Mission>{
     return this.http.get<Mission>(`${environment.baseUrl}missions?id=${id}`);
   }
+
+
 
 }

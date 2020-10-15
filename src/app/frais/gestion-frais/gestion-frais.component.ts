@@ -38,9 +38,5 @@ export class GestionFraisComponent implements OnInit {
     )
   }
 
-  // chooseMission (mission: Mission) {
-  //   this.missionService.publierMission(mission);
-  //   this.router.navigateByUrl('/notes-frais');
-  // }
 
 }

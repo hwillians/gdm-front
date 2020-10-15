@@ -3,8 +3,11 @@ import { Frais } from '../../models/frais';
 import { Mission } from '../../models/mission';
 import { FraisService } from '../../services/frais.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MissionService } from 'src/app/services/mission.service';
+import html2canvas from 'html2canvas';
+import * as pdfMake from "pdfmake/build/pdfmake";
+
 
 @Component({
   selector: 'app-saisie-note-de-frais',
@@ -24,38 +27,40 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   indexAModifier: number;
   indexASupprimer: number;
   deduction: number;
-  totalFrais: number;
+  //totalFrais = 0;
+  isPdfCreation = false;
 
   fraisCree: Frais = new Frais;
 
 
 
-  constructor(private missionService: MissionService, private route: ActivatedRoute, private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(private missionService: MissionService, private router: Router, private route: ActivatedRoute, private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {      
+    this.isPdfCreation = this.router.url.startsWith("/notes-frais-pdf");
+    this.route.params.subscribe(params => {
       this.missionId = params['id'];
       this.getMission();
     });
-    
+
   }
 
   //récupère une mission
-  getMission () {
-    this.missionService.getMission(this.missionId).subscribe (res => {
+  getMission() {
+    this.missionService.getMission(this.missionId).subscribe(res => {
       this.mission = res;
       console.log(this.mission);
-      
+
       this.getListeNotesDeFrais();
     })
 
   }
 
   // //récupère les frais correspondant à la mission
-  getListeNotesDeFrais () {
+  getListeNotesDeFrais() {
     this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
       listf => this.listfrais = listf,
       error => this.erreurTechnique = true,
@@ -88,6 +93,25 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
   /// fin modal
 
+  //pdf
+  pdfDownload() {
+    html2canvas(document.getElementById('exportthis')).then(canvas => {
+      var imgData = canvas.toDataURL("image/png");
+      var data = canvas.toDataURL();
+      var docDefinition = {
+        content: [{
+          image: data,
+          width: 500,
+        }]
+      };
+      pdfMake.createPdf(docDefinition).download("Note_de_frais.pdf");
+    }
+    );
+  }
+
+
+  //fin pdf
+
   // vérification date comprise dans les dates de la mission
   dateIsValide(date: Date): boolean {
     return new Date(date) >= new Date(this.mission.dateDebut) &&
@@ -95,7 +119,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
 
   // vérification que le couple date/nature est unique
-  fraisIsUnique(frais: Frais, indexExclusion:number): boolean {
+  fraisIsUnique(frais: Frais, indexExclusion: number): boolean {
     var isUnique = true;
     for (let i = 0; i < this.listfrais.length; ++i) {
       if (i != indexExclusion) {
@@ -173,22 +197,46 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
 
+  //calcul total des frais
+  // calculTotalFrais(): number {
+  //   let totalFrais = 0;
+  //   for (let i; i < this.listfrais.length; ++i) {
+  //     totalFrais = totalFrais + this.listfrais[i].montantFrais;
+  //   }
+  //   return totalFrais;
+  // }
+
+  // calculJourMission(d1, d2) {
+  //   return (d2 - d1) / (1000 * 3600 * 24);
+  // }
+
+  // calculDeduction() {
+  //   if (this.calculTotalFrais() > this.mission.plafond) {
+  //     this.deduction = this.totalFrais - (this.mission.plafond * this.calculJourMission(
+  //       this.mission.dateDebut.getTime(), this.mission.dateFin.getTime()));
+  //   }
+  // }
+
+
   /// communication avec la BDD
   // validation de la note de frais
   validerNoteDefrais() {
+    //console.log(this.calculTotalFrais());
     let nbFraisModifies = 0;
     let nbFraisAjoutes = 0;
+    //if (this.calculTotalFrais() <= this.mission.plafond || this.mission.isPlafondDepassable) {
+
     this.listfrais.forEach(frais => {
       if (frais.new) {
-        nbFraisAjoutes ++;
+        nbFraisAjoutes++;
         // ajout du frais en base
-        console.log('ajout frais :', frais);        
+        console.log('ajout frais :', frais);
         this.fraisService.creerFrais(this.mission.id, frais).subscribe(res => {
           frais.new = false;
           console.log('Ajout réussi');
         });
       } else if (frais.modified) {
-        nbFraisModifies ++;
+        nbFraisModifies++;
         // modification du frais en base
         this.fraisService.modifierFrais(frais).subscribe(res => {
           frais.modified = false;
@@ -196,9 +244,14 @@ export class SaisieNoteDeFraisComponent implements OnInit {
         });
       }
     });
-    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifié(s)' );
+
+    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifié(s)');
     window.location.reload();
 
+    // } 
+    // else if (this.mission.isPlafondDepassable = false && this.calculTotalFrais() > this.mission.plafond) {
+    //   alert("Le plafond de" + this.mission.plafond + " n'est pas dépassable");
+    // }
   }
 
 

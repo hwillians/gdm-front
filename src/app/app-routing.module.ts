@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'primes', component: PrimesComponent },
   { path: 'gestion-frais', component: GestionFraisComponent },
   { path: 'notes-frais/:id', component: SaisieNoteDeFraisComponent },
+  { path: 'notes-frais-pdf/:id', component: SaisieNoteDeFraisComponent },
   { path: 'validation-mission', component: ValidationMissionComponent },
 
   { path: 'natures', component: SaisieNatureComponent },

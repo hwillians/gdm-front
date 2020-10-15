@@ -1,5 +1,8 @@
 export class Mission {
 
+    plafond: number;
+    isPlafondDepassable: boolean;
+
     constructor(public id: number,
         public dateDebut: Date,
         public dateFin: Date,

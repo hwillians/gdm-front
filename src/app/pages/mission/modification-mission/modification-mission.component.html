@@ -1,11 +1,6 @@
-<div class="modal-header">
-    <h4 class="modal-title">Modification de Mission</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+
 {{mission|json}}
-<div class="modal-body">
+{{listMission.length}}
 
     <div class="row">
         <div class="col">
@@ -17,30 +12,29 @@
                             [(ngModel)]="mission.dateDebut" ngbDatepicker #db="ngbDatepicker" [minDate]="dateMin"
                             placeholder="jj/mm/aaaa" required>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="db.toggle()"
-                                type="button"></button>
+                            <button class="btn btn-outline-secondary calendar" (click)="db.toggle()" type="button"></button>
                         </div>
                         <div *ngIf="dateDebut.dirty && dateDebut.invalid" class="invalid-feedback">
                             La date de début est obligatoire.
                         </div>
                     </div>
                 </div>
-
+    
                 <div class="form-group row" [ngClass]="{ 'was-validated' : dateFin.dirty}">
                     <label for="dateFin" class="col-md-4 col-form-label">Date de fin</label>
                     <div class="input-group col-md-8">
-                        <input #dateFin="ngModel" class="form-control" id="dateFin" name="dateFin"
+                        <input #dateFin="ngModel" class="form-control" id="dateFin" name="dngateFin"
                             [(ngModel)]="mission.dateFin" ngbDatepicker #df="ngbDatepicker" [minDate]="dateMin"
                             placeholder="jj/mm/aaaa" required>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="df.toggle()"
-                                type="button"></button>
+                            <button class="btn btn-outline-secondary calendar" (click)="df.toggle()" type="button"></button>
                         </div>
                         <div *ngIf="dateFin.dirty && dateFin.invalid" class="invalid-feedback">
                             La Date de fin est obligatoire.
                         </div>
                     </div>
                 </div>
+                
 
                 <div class="form-group row" [ngClass]="{ 'was-validated' : nature.dirty}">
                     <label for="nature" class="col-md-4 col-form-label">Nature</label>
@@ -101,12 +95,27 @@
             </form>
         </div>
     </div>
-</div>
 
-<div class="modal-footer">
+
+
     <button
         [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee "
         type="button" class="btn btn-outline-dark"
-        (click)="modifierMission(mission);activeModal.close('Close click')">Modifier</button>
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-</div>
+        (click)="modifierMission(mission,content)">Modifier</button>
+   
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>{{message}}</p>
+    </div>
+    <div>
+        <button type="button" class="btn btn-light" routerLink="/demande-mission"
+            (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

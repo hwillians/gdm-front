@@ -1,119 +1,118 @@
-<div class="modal-header">
-    <h4 class="modal-title">Demande de Mission</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+<h4>Demande de Mission</h4>
+<div class="row">
+    <div class="col">
+        <form #etatForm="ngForm">
 
-<div class="modal-body">
-
-    <div class="row">
-        <div class="col">
-            <form #etatForm="ngForm">
-
-       
-                <div class="form-group row" [ngClass]="{ 'was-validated' : dateDebut.dirty}">
-                    <label for="dateDebut" class="col-md-4 col-form-label">Date de début</label>
-                    <div class="input-group col-md-8">
-                        <input class="form-control" #dateDebut="ngModel" id="dateDebut" name="dateDebut"
-                            [(ngModel)]="mission.dateDebut" ngbDatepicker #db="ngbDatepicker" [minDate]="dateMin"
-                            placeholder="jj/mm/aaaa"   required>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="db.toggle()"
-                                type="button"></button>
-                        </div>
-                        <div *ngIf="dateDebut.dirty && dateDebut.invalid" class="invalid-feedback">
-                            La date de début est obligatoire.
-                        </div>
-                        <div *ngIf="dateDebutValid()">
-                            La date de début est trop proche.
-                        </div>
+            <div class="form-group row" [ngClass]="{ 'was-validated' : dateDebut.dirty}">
+                <label for="dateDebut" class="col-md-4 col-form-label">Date de début</label>
+                <div class="input-group col-md-8">
+                    <input class="form-control" #dateDebut="ngModel" id="dateDebut" name="dateDebut"
+                        [(ngModel)]="mission.dateDebut" ngbDatepicker #db="ngbDatepicker" [minDate]="dateMin"
+                        placeholder="jj/mm/aaaa" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="db.toggle()" type="button"></button>
+                    </div>
+                    <div *ngIf="dateDebut.dirty && dateDebut.invalid" class="invalid-feedback">
+                        La date de début est obligatoire.
                     </div>
                 </div>
-                
-                <div class="form-group row" [ngClass]="{ 'was-validated' : dateFin.dirty}">
-                    <label for="dateFin" class="col-md-4 col-form-label">Date de fin</label>
-                    <div class="input-group col-md-8">
-                        <input #dateFin="ngModel"class="form-control"  id="dateFin" name="dngateFin"
-                            [(ngModel)]="mission.dateFin" ngbDatepicker #df="ngbDatepicker" [minDate]="dateMin"
-                            placeholder="jj/mm/aaaa"  required> 
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="df.toggle()"
-                                type="button"></button>
-                        </div>
-                        <div *ngIf="dateFin.dirty && dateFin.invalid" class="invalid-feedback">
-                            La Date de fin est obligatoire.
-                        </div>
-                    </div>
-                </div>
+            </div>
 
-                <div class="form-group row" [ngClass]="{ 'was-validated' : nature.dirty}">
-                    <label for="nature" class="col-md-4 col-form-label">Nature</label>
-                    <div class="col-md-8">
-                        <select class=" form-control custom-select mr-sm-2" #nature="ngModel"
-                            [(ngModel)]="mission.nomNature" id="nature" name="nature" required>
-                           
-                            <option *ngFor="let nature of listNature" [value]="nature.nom">{{nature.nom}}</option>
-                        </select>
+            <div class="form-group row" [ngClass]="{ 'was-validated' : dateFin.dirty}">
+                <label for="dateFin" class="col-md-4 col-form-label">Date de fin</label>
+                <div class="input-group col-md-8">
+                    <input #dateFin="ngModel" class="form-control" id="dateFin" name="dngateFin"
+                        [(ngModel)]="mission.dateFin" ngbDatepicker #df="ngbDatepicker" [minDate]="dateMin"
+                        placeholder="jj/mm/aaaa" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="df.toggle()" type="button"></button>
+                    </div>
+                    <div *ngIf="dateFin.dirty && dateFin.invalid" class="invalid-feedback">
+                        La Date de fin est obligatoire.
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group row" [ngClass]="{ 'was-validated' : villeDepart.dirty}">
-                    <label for="villeDepart" class="col-md-4 col-form-label">Ville de départ</label>
-                    <div class="col-md-8">
-                        <input type="text" #villeDepart="ngModel" [(ngModel)]="mission.villeDepart" class="form-control"
-                            id="villeDepart" name="villeDepart" required>
-                        <div *ngIf="villeDepart.dirty && villeDepart.invalid" class="invalid-feedback">
-                            La Ville de départ est obligatoire
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group row" [ngClass]="{ 'was-validated' : nature.dirty}">
+                <label for="nature" class="col-md-4 col-form-label">Nature</label>
+                <div class="col-md-8">
+                    <select class=" form-control custom-select mr-sm-2" #nature="ngModel"
+                        [(ngModel)]="mission.nomNature" id="nature" name="nature" required>
 
-                <div class="form-group row" [ngClass]="{ 'was-validated' : villeArrivee.dirty}">
-                    <label for="villeArrivee" class="col-md-4 col-form-label">Ville d'arrivée</label>
-                    <div class="col-md-8">
-                        <input type="text" #villeArrivee="ngModel" [(ngModel)]="mission.villeArrivee"
-                            class="form-control" id="villeArrivee" name="villeArrive" required>
-                        <div *ngIf="villeArrivee.dirty && villeArrivee.invalid" class="invalid-feedback">
-                            La Ville de arrivée est obligatoire
-                        </div>
-                    </div>
+                        <option *ngFor="let nature of listNature" [value]="nature.nom">{{nature.nom}}</option>
+                    </select>
                 </div>
+            </div>
 
-                <div class="form-group row" [ngClass]="{ 'was-validated' : transport.dirty}">
-                    <label for="transport" class="col-md-4 col-form-label">Transport</label>
-                    <div class="col-md-8">
-                        <select class=" form-control custom-select mr-sm-2"  #transport="ngModel"
-                            [(ngModel)]="mission.transport" id="trasnport" name="trasnport" required>
-                      
-                            <option *ngFor="let transport of listTransport" [value]="transport.type">{{transport.type}}
-                            </option>
-                        </select>
-                        <div *ngIf="transport.dirty && transport.invalid" class="invalid-feedback">
-                            Le type de transporte est obligatoire
-                        </div>
-                        
+            <div class="form-group row" [ngClass]="{ 'was-validated' : villeDepart.dirty}">
+                <label for="villeDepart" class="col-md-4 col-form-label">Ville de départ</label>
+                <div class="col-md-8">
+                    <input type="text" #villeDepart="ngModel" [(ngModel)]="mission.villeDepart" class="form-control"
+                        id="villeDepart" name="villeDepart" ngxAutocomPlace (selectedPlace)="setVilleArrivee($event)"
+                        required>
+                    <div *ngIf="villeDepart.dirty && villeDepart.invalid" class="invalid-feedback">
+                        La Ville de départ est obligatoire
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="staticPrime" class="col-md-4 col-form-label">Estimation Prime</label>
-                    <div class="col-md-4">
-                      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="0">
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'was-validated' : villeArrivee.dirty}">
+                <label for="villeArrivee" class="col-md-4 col-form-label">Ville d'arrivée</label>
+                <div class="col-md-8">
+                    <input type="text" #villeArrivee="ngModel" [(ngModel)]="mission.villeArrivee" class="form-control"
+                        id="villeArrivee" name="villeArrive" ngxAutocomPlace (selectedPlace)="setVilleDepart($event)"
+                        required>
+                    <div *ngIf="villeArrivee.dirty && villeArrivee.invalid" class="invalid-feedback">
+                        La Ville de arrivée est obligatoire
                     </div>
-                    <div class="col-md-4">
-                        <p>€</p>
-                      </div>
-                  </div>
-            </form>
-        </div>
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="{ 'was-validated' : transport.dirty}">
+                <label for="transport" class="col-md-4 col-form-label">Transport</label>
+                <div class="col-md-8">
+                    <select class=" form-control custom-select mr-sm-2" #transport="ngModel"
+                        [(ngModel)]="mission.transport" id="trasnport" name="trasnport" required>
+
+                        <option *ngFor="let transport of listTransport" [value]="transport.type">{{transport.type}}
+                        </option>
+                    </select>
+                    <div *ngIf="transport.dirty && transport.invalid" class="invalid-feedback">
+                        Le type de transporte est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="staticPrime" class="col-md-4 col-form-label">Estimation Prime</label>
+                <div class="col-md-4">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="0">
+                </div>
+                <div class="col-md-4">
+                    <p>€</p>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-{{mission|json}}
-{{dateTemoin| date :'dd/MM/yyyy'}}
-{{dateDebutValid()}}
 
-<div class="modal-footer">
-    <button 
-    [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee " type="button" class="btn btn-outline-dark" (click)="demanderMission();activeModal.close('Close click');">demander</button>
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
-</div>
+<button
+    [disabled]="!mission.dateDebut || !mission.dateFin || !mission.nomNature || !mission.transport || !mission.villeDepart || !mission.villeArrivee "
+    type="button" class="btn btn-outline-dark" (click)="demanderMission(content)">demander</button>
+<button type="button" class="btn btn-outline-dark" routerLink="/gestion-mission">Annuler</button>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>{{message}}</p>
+    </div>
+    <div>
+        <button type="button" class="btn btn-light" routerLink="/demande-mission"
+            (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

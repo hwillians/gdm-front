@@ -66,7 +66,7 @@ export class DemadeMissionComponent implements OnInit {
 
   siChevauche(dateDebut: Date, dateFin: Date): Boolean {
     for (let mission of this.listMission) {
-      if (dateDebut >= new Date(mission.dateDebut) || dateFin <= new Date(mission.dateFin)) {
+      if (dateDebut >= new Date(mission.dateDebut) && dateFin <= new Date(mission.dateFin)) {
         return true
       }
     }

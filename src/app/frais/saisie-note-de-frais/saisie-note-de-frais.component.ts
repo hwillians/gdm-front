@@ -181,6 +181,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     } else {
       alert('Le couple date/nature doit être unique');
     }
+
   }
 
 

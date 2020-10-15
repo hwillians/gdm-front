@@ -2,6 +2,7 @@ export class Mission {
 
     plafond: number;
     isPlafondDepassable: boolean;
+    montant: number;
 
     constructor(public id: number,
         public dateDebut: Date,
@@ -11,7 +12,7 @@ export class Mission {
         public villeArrivee: string,
         public transport: string,
         public statut: string,
-        public prime: any
+        public prime: any,
         ) { } 
 }
 

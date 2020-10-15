@@ -27,7 +27,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   indexAModifier: number;
   indexASupprimer: number;
   deduction: number;
-  //totalFrais = 0;
+
   isPdfCreation = false;
 
   fraisCree: Frais = new Frais;
@@ -197,62 +197,60 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
 
-  //calcul total des frais
-  // calculTotalFrais(): number {
-  //   let totalFrais = 0;
-  //   for (let i; i < this.listfrais.length; ++i) {
-  //     totalFrais = totalFrais + this.listfrais[i].montantFrais;
-  //   }
-  //   return totalFrais;
-  // }
+  // //calcul total des frais
+  calculTotalFrais(): number {
+    let totalFrais = 0;
+    this.listfrais.forEach(frais => {
+      totalFrais += frais.montantFrais;
+    });
+    return totalFrais;
+  }
 
-  // calculJourMission(d1, d2) {
-  //   return (d2 - d1) / (1000 * 3600 * 24);
+  // calculJourMission() {
+  //   return (new Date(this.mission.dateFin).getTime() - new Date(this.mission.dateDebut).getTime())/(1000*60*60*24);
   // }
 
   // calculDeduction() {
-  //   if (this.calculTotalFrais() > this.mission.plafond) {
-  //     this.deduction = this.totalFrais - (this.mission.plafond * this.calculJourMission(
-  //       this.mission.dateDebut.getTime(), this.mission.dateFin.getTime()));
-  //   }
+  //   let totalFrais = this.calculTotalFrais();
+  //   let deduction;     
+  //   deduction = totalFrais - (this.mission.plafond * this.calculJourMission());  
   // }
 
 
   /// communication avec la BDD
   // validation de la note de frais
   validerNoteDefrais() {
-    //console.log(this.calculTotalFrais());
-    let nbFraisModifies = 0;
-    let nbFraisAjoutes = 0;
-    //if (this.calculTotalFrais() <= this.mission.plafond || this.mission.isPlafondDepassable) {
+    let totalFrais = this.calculTotalFrais();
+    if (totalFrais > this.mission.plafond && !this.mission.isPlafondDepassable) {
+      alert('Plafond dépassé !');
+    } else {
+      // if(totalFrais > this.mission.plafond){
+      // }
+      console.log(this.calculTotalFrais());
+      let nbFraisModifies = 0;
+      let nbFraisAjoutes = 0;
 
-    this.listfrais.forEach(frais => {
-      if (frais.new) {
-        nbFraisAjoutes++;
-        // ajout du frais en base
-        console.log('ajout frais :', frais);
-        this.fraisService.creerFrais(this.mission.id, frais).subscribe(res => {
-          frais.new = false;
-          console.log('Ajout réussi');
-        });
-      } else if (frais.modified) {
-        nbFraisModifies++;
-        // modification du frais en base
-        this.fraisService.modifierFrais(frais).subscribe(res => {
-          frais.modified = false;
+      this.listfrais.forEach(frais => {
+        if (frais.new) {
+          nbFraisAjoutes++;
+          // ajout du frais en base
+          console.log('ajout frais :', frais);
+          this.fraisService.creerFrais(this.mission.id, frais).subscribe(res => {
+            frais.new = false;
+            console.log('Ajout réussi');
+          });
+        } else if (frais.modified) {
+          nbFraisModifies++;
+          // modification du frais en base
+          this.fraisService.modifierFrais(frais).subscribe(res => {
+            frais.modified = false;
 
-        });
-      }
-    });
+          });
+        }
+      });
 
-    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifié(s)');
-    window.location.reload();
-
-    // } 
-    // else if (this.mission.isPlafondDepassable = false && this.calculTotalFrais() > this.mission.plafond) {
-    //   alert("Le plafond de" + this.mission.plafond + " n'est pas dépassable");
-    // }
+      alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifié(s)');
+      window.location.reload();
+    }
   }
-
-
 }

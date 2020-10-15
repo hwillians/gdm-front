@@ -70,7 +70,7 @@ export class ModificationMissionComponent implements OnInit {
 
   siChevauche(dateDebut: Date, dateFin: Date): Boolean {
     for (let mission of this.listMission) {
-      if (dateDebut >= new Date(mission.dateDebut) || dateFin <= new Date(mission.dateFin)) {
+      if (dateDebut >= new Date(mission.dateDebut) && dateFin <= new Date(mission.dateFin)) {
         return true
       }
     }
@@ -83,9 +83,9 @@ export class ModificationMissionComponent implements OnInit {
     } else if (this.mission.transport === "Avion" && this.parseDate(this.mission.dateDebut) < this.dateTemoin) {
       this.openVerticallyCentered(content)
       this.message = "Pour les deplacement en avion une anticipation de 7 jours est exigée"
-    // } else if (this.siChevauche(this.parseDate(this.mission.dateDebut), this.parseDate(this.mission.dateFin))) {
-    //   this.openVerticallyCentered(content);
-    //   this.message = "Cette mission chevauche une autre mission ou un congé";
+     } else if (this.siChevauche(this.parseDate(this.mission.dateDebut), this.parseDate(this.mission.dateFin))) {
+       this.openVerticallyCentered(content);
+       this.message = "Cette mission chevauche une autre mission ou un congé";
     } else if (this.parseDate(this.mission.dateDebut).getDay() === 6 || this.parseDate(this.mission.dateDebut).getDay() === 7) {
       this.openVerticallyCentered(content);
       this.message = "la mission ne peut pas commencer un jour non travaillé";

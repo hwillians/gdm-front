@@ -10,16 +10,19 @@ import { PrimesComponent } from './pages/primes/primes.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
 import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mission.component';
+import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
 import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
 import { SaisieNoteDeFraisComponent } from './frais/saisie-note-de-frais/saisie-note-de-frais.component';
 
+
 const routes: Routes = [
   { path: 'connection', component: AuthComponent },
-  { path: 'accueil', component: AccueilComponent },
-  { path: 'gestion-mission', component: GestionMissionComponent },
-  { path: 'demande-mission', component: DemadeMissionComponent },
-  { path: 'planning-mission', component: PlannigMissionComponent },
-  { path: 'primes', component: PrimesComponent },
+  { path: 'accueil', component: AccueilComponent , canActivate: [StatutConnecteService] },
+  { path: 'gestion-mission', component: GestionMissionComponent , canActivate: [StatutConnecteService] },
+  { path: 'demande-mission', component: DemadeMissionComponent , canActivate: [StatutConnecteService] },
+  { path: 'modification-mission/:idMission', component: ModificationMissionComponent, canActivate: [StatutConnecteService]  },
+  { path: 'planning-mission', component: PlannigMissionComponent , canActivate: [StatutConnecteService] },
+  { path: 'primes', component: PrimesComponent, canActivate: [StatutConnecteService]  },
   { path: 'gestion-frais', component: GestionFraisComponent },
   { path: 'notes-frais/:id', component: SaisieNoteDeFraisComponent },
   { path: 'validation-mission', component: ValidationMissionComponent },

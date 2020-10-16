@@ -9,6 +9,17 @@ import { Mission } from '../models/mission';
 })
 export class MissionService {
 
+  subjectMissionSelectionne = new Subject<Mission>()
+  
+  publierMission(mission: Mission): void {
+    this.subjectMissionSelectionne.next(mission); 
+  }
+
+  abonnerMissionSelectionne(): Observable<Mission> {
+    return this.subjectMissionSelectionne.asObservable();
+  }
+  
+  
   constructor(private http: HttpClient) { }
 
   listeMissions(idCollegue: number): Observable<Mission[]> {
@@ -29,6 +40,15 @@ export class MissionService {
 
   validationMission(idMission: number, valide: boolean, idManager: number): Observable<Mission[]> {
     return this.http.patch<Mission[]>(`${environment.baseUrl}missions/manager/${idManager}`, { "id": idMission, "valide": valide })
+  }
+
+
+  supprimerMission(id:number):Observable<Mission[]> {
+    return this.http.delete<Mission[]>(`${environment.baseUrl}missions/${id}`)
+  }
+
+  traitementNuit(){
+    return this.http.patch(`${environment.baseUrl}missions/nuit`,null)
   }
 
   getMission(id: number): Observable<Mission>{

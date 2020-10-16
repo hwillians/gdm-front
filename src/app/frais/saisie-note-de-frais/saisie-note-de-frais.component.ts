@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Frais } from '../models/frais';
-import { Mission } from '../models/mission';
-import { FraisService } from '../services/frais.service';
+import { Frais } from '../../models/frais';
+import { Mission } from '../../models/mission';
+import { FraisService } from '../../services/frais.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MissionService } from 'src/app/services/mission.service';
+import html2canvas from 'html2canvas';
+import * as pdfMake from "pdfmake/build/pdfmake";
+
 
 @Component({
   selector: 'app-saisie-note-de-frais',
@@ -12,8 +17,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class SaisieNoteDeFraisComponent implements OnInit {
 
 
-  //il faudra recuperer la vrai mission plus tard
-  mission: Mission = new Mission(3, new Date("2020-01-01"), new Date("2020-01-03"), null, null, null, null, null, null);
+  public mission: Mission;
+  missionId: number;
 
   listfrais: Frais[]
   erreurTechnique = false;
@@ -21,22 +26,46 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   fraisAModifier: Frais;
   indexAModifier: number;
   indexASupprimer: number;
+  deduction: number;
+
+  isPdfCreation = false;
 
   fraisCree: Frais = new Frais;
 
 
 
-  constructor(private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
+  constructor(private missionService: MissionService, private router: Router, private route: ActivatedRoute, private fraisService: FraisService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngOnInit(): void {
+    this.isPdfCreation = this.router.url.startsWith("/notes-frais-pdf");
+    this.route.params.subscribe(params => {
+      this.missionId = params['id'];
+      this.getMission();
+    });
+
+  }
+
+  //récupère une mission
+  getMission() {
+    this.missionService.getMission(this.missionId).subscribe(res => {
+      this.mission = res;
+      console.log(this.mission);
+
+      this.getListeNotesDeFrais();
+    })
+
+  }
+
+  // //récupère les frais correspondant à la mission
+  getListeNotesDeFrais() {
     this.fraisService.listeNotesDeFrais(this.mission.id).subscribe(
       listf => this.listfrais = listf,
       error => this.erreurTechnique = true,
       () => { }
-    )
+    );
   }
 
   /// modal
@@ -64,12 +93,33 @@ export class SaisieNoteDeFraisComponent implements OnInit {
   }
   /// fin modal
 
+  //pdf
+  pdfDownload() {
+    html2canvas(document.getElementById('exportthis')).then(canvas => {
+      var imgData = canvas.toDataURL("image/png");
+      var data = canvas.toDataURL();
+      var docDefinition = {
+        content: [{
+          image: data,
+          width: 500,
+        }]
+      };
+      pdfMake.createPdf(docDefinition).download("Note_de_frais.pdf");
+    }
+    );
+  }
+
+
+  //fin pdf
+
+  // vérification date comprise dans les dates de la mission
   dateIsValide(date: Date): boolean {
     return new Date(date) >= new Date(this.mission.dateDebut) &&
       new Date(date) <= new Date(this.mission.dateFin)
   }
 
-  fraisIsUnique(frais: Frais, indexExclusion:number): boolean {
+  // vérification que le couple date/nature est unique
+  fraisIsUnique(frais: Frais, indexExclusion: number): boolean {
     var isUnique = true;
     for (let i = 0; i < this.listfrais.length; ++i) {
       if (i != indexExclusion) {
@@ -131,6 +181,7 @@ export class SaisieNoteDeFraisComponent implements OnInit {
     } else {
       alert('Le couple date/nature doit être unique');
     }
+
   }
 
 
@@ -147,36 +198,60 @@ export class SaisieNoteDeFraisComponent implements OnInit {
 
 
 
+  // //calcul total des frais
+  calculTotalFrais(): number {
+    let totalFrais = 0;
+    this.listfrais.forEach(frais => {
+      totalFrais += frais.montantFrais;
+    });
+    return totalFrais;
+  }
+
+  // calculJourMission() {
+  //   return (new Date(this.mission.dateFin).getTime() - new Date(this.mission.dateDebut).getTime())/(1000*60*60*24);
+  // }
+
+  // calculDeduction() {
+  //   let totalFrais = this.calculTotalFrais();
+  //   let deduction;     
+  //   deduction = totalFrais - (this.mission.plafond * this.calculJourMission());  
+  // }
+
+
   /// communication avec la BDD
   // validation de la note de frais
   validerNoteDefrais() {
-    let nbFraisModifies = 0;
-    let nbFraisAjoutes = 0;
-    this.listfrais.forEach(frais => {
-      if (frais.new) {
-        nbFraisAjoutes ++;
-        // TODO mettre à jour l'id de la mission automatiquement
-        this.fraisService.creerFrais(3, frais).subscribe(res => {
-          frais.new = false;
-        });
-      } else if (frais.modified) {
-        nbFraisModifies ++;
-        this.fraisService.modifierFrais(frais).subscribe(res => {
-          frais.modified = false;
+    let totalFrais = this.calculTotalFrais();
+    if (totalFrais > this.mission.plafond && !this.mission.isPlafondDepassable) {
+      alert('Plafond dépassé !');
+    } else {
+      // if(totalFrais > this.mission.plafond){
+      // }
+      console.log(this.calculTotalFrais());
+      let nbFraisModifies = 0;
+      let nbFraisAjoutes = 0;
 
-        });
-      }
-    });
-    alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifiés' );
-    window.location.reload();
+      this.listfrais.forEach(frais => {
+        if (frais.new) {
+          nbFraisAjoutes++;
+          // ajout du frais en base
+          console.log('ajout frais :', frais);
+          this.fraisService.creerFrais(this.mission.id, frais).subscribe(res => {
+            frais.new = false;
+            console.log('Ajout réussi');
+          });
+        } else if (frais.modified) {
+          nbFraisModifies++;
+          // modification du frais en base
+          this.fraisService.modifierFrais(frais).subscribe(res => {
+            frais.modified = false;
 
+          });
+        }
+      });
+
+      alert('La note de frais est validée ! ' + nbFraisAjoutes + ' frais ajoutés, ' + nbFraisModifies + ' frais modifié(s)');
+      window.location.reload();
+    }
   }
-
-
-
-
-
-
-
-
 }

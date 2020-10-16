@@ -1,0 +1,32 @@
+<h1>Liste des missions</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Date de début</th>
+            <th scope="col">Date de fin</th>
+            <th scope="col">Nature</th>
+            <th scope="col">Ville de départ</th>
+            <th scope="col">Ville d'arrivée</th>
+            <th scope="col">Transport</th>
+            <th scope="col">Frais</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let mission of listeMissions; let index = index;">
+            <ng-template [ngIf]="mission">
+                <td>{{mission.dateDebut |date:'dd/MM/yyyy'}}</td>
+                <td>{{mission.dateFin}}</td>
+                <td>{{mission.nomNature}}</td>
+                <td>{{mission.villeDepart}}</td>
+                <td>{{mission.villeArrivee}}</td>
+                <td>{{mission.transport}}</td>
+                <td>{{mission.montant}}€</td>
+                <td>
+                    <button [disabled]="!isMissionEchue(mission)" type="button" class="btn btn-outline-primary" [routerLink]="['/notes-frais', mission.id]">+</button>
+                    <button [disabled]="!isMissionEchue(mission)" type="button" class="btn btn-outline-primary" [routerLink]="['/notes-frais-pdf', mission.id]">pdf</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>

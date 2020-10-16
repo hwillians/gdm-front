@@ -29,6 +29,12 @@ export class ValidationMissionComponent implements OnInit {
     alert('la mission '+idMission+' a été refusée')
   }
 
+  traitementNuit(){
+    this.missionService.traitementNuit().subscribe(
+    
+    )
+  }
+
   constructor(private missionService: MissionService, private authService: AuthService,) { }
 
   ngOnInit(): void {

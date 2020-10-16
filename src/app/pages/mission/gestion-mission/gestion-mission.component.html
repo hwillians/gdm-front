@@ -29,7 +29,7 @@
                 <td>{{mission.statut}}</td>
             
                 <td>
-                    <button type="button" *ngIf="mission.statut  === 'INITIALE'||mission.statut  === 'REJETEE'" class="btn btn-outline-primary" (click)="editerMission()">
+                    <button type="button" *ngIf="mission.statut  === 'INITIALE'||mission.statut  === 'REJETEE'" class="btn btn-outline-primary" (click)="editerMission(mission)">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -38,7 +38,7 @@
                         </svg>
                     </button>
 
-                    <button type="button" class="btn btn-outline-primary" (click)="supprimerMission()">
+                    <button type="button" class="btn btn-outline-primary" (click)="supprimerMission(mission.id)">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -53,5 +53,5 @@
             </tr>
         </tbody>
     </table>
-    <button class="btn btn-link float-right" (click)="open()">Demander un mission</button>    
+    <button class="btn btn-link float-right" routerLink="/demande-mission" (click)="demanderMission()">Demander un mission</button>    
 </div>

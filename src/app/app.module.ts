@@ -6,8 +6,8 @@ import {AuthComponent} from './auth/auth.component';
 import {TechComponent} from './tech/tech.component';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import { SaisieNoteDeFraisComponent } from './saisie-note-de-frais/saisie-note-de-frais.component';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SaisieNoteDeFraisComponent } from './frais/saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,6 +20,8 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 
 
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
+import { NgxAutocomPlaceModule } from 'ngx-autocom-place';
+import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
 
 
 
@@ -37,8 +39,12 @@ import { ValidationMissionComponent } from './pages/validation-mission/validatio
     AjoutNatureComponent,
     SaisieNatureComponent,
     SupprimerNatureComponent,
+
     ModifierNatureComponent,
-    ValidationMissionComponent
+
+    ValidationMissionComponent,
+    GestionFraisComponent
+
 
 
 
@@ -48,7 +54,9 @@ import { ValidationMissionComponent } from './pages/validation-mission/validatio
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    NgxAutocomPlaceModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

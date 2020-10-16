@@ -14,7 +14,6 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
 import { SaisieNoteDeFraisComponent } from './frais/saisie-note-de-frais/saisie-note-de-frais.component';
 
-
 const routes: Routes = [
   { path: 'connection', component: AuthComponent },
   { path: 'accueil', component: AccueilComponent , canActivate: [StatutConnecteService] },

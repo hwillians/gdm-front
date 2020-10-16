@@ -10,14 +10,19 @@ import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SaisieNoteDeFraisComponent } from './frais/saisie-note-de-frais/saisie-note-de-frais.component';
 import { SaisieNatureComponent } from './saisie-nature/saisie-nature.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
+import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+import { ModifierNatureComponent } from './saisie-nature/modifier-nature/modifier-nature.component';
 import { GestionMissionComponent } from './pages/mission/gestion-mission/gestion-mission.component';
 import { DemadeMissionComponent } from './pages/mission/demade-mission/demade-mission.component';
 import { ModificationMissionComponent } from './pages/mission/modification-mission/modification-mission.component';
-import { AjoutNatureComponent } from './saisie-nature/ajout-nature/ajout-nature.component';
-import { SupprimerNatureComponent } from './saisie-nature/supprimer-nature/supprimer-nature.component';
+
+
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
 import { NgxAutocomPlaceModule } from 'ngx-autocom-place';
 import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
+
 
 
 
@@ -34,8 +39,14 @@ import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.compo
     AjoutNatureComponent,
     SaisieNatureComponent,
     SupprimerNatureComponent,
+
+    ModifierNatureComponent,
+
     ValidationMissionComponent,
     GestionFraisComponent
+
+
+
 
   ],
   imports: [

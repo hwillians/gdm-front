@@ -14,15 +14,7 @@ export class SaisieNatureComponent implements OnInit {
 
   constructor(private NatureService:NatureService) { }
 
-  
 
-  supprimerNature(){
-    alert('une nature de mission sera supprimée')
-  }
-
-  editerNature(){
-    alert('une nature de mission sera modifiée')
-  }
 
   ngOnInit(): void {
 

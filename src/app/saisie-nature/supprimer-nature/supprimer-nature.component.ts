@@ -16,23 +16,18 @@ export class SupprimerNatureComponent implements OnInit {
   
   constructor(private service: NatureService, config: NgbModalConfig, private modalService: NgbModal) { }
 
- 
 
-  
   ngOnInit(): void {
-    
   }
 
   close(): void {
     this.modalService.dismissAll();
   }
 
-  supprimer(nature): void {
-    this.service.deleteNature(nature.id).subscribe(
-      () => { },
-      err => console.log(err)
-    );
-    window.location.reload();
+  valider(): void {
+   
+     this.service.deleteNature(this.nature.id);
+     window.location.reload();
   }
 
   open(content): void {

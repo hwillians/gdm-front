@@ -8,10 +8,10 @@
   <div class="modal-body">
 
     <div>
-      <form (ngSubmit)="supprimer(nature)" #monForm="ngForm">
+      <form (ngSubmit)="valider()" #monForm="ngForm">
         <div class="form-row">
           <div class="col">
-            <p>voulez vous confirmer la suppresion de cette nature de mission ?</p>
+            <p>confirmez-vous la suppression de la nature de mission {{nature.nom}} ?</p>
           </div>
         </div>
 

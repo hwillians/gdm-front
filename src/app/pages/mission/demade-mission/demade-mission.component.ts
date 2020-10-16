@@ -22,7 +22,9 @@ import { NatureService } from 'src/app/services/nature.service';
 
 export class DemadeMissionComponent implements OnInit {
 
-  mission: Mission
+
+  mission: Mission = new Mission(1, new Date(1995, 11, 17), new Date(1995, 11, 17), 'conseil', 'caracas', 'montpellier', 'bus', 'valide', 10);
+
   listNature: Nature[]
   dateMin: NgbDate
   today = new Date()

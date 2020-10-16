@@ -109,21 +109,24 @@ export class DemadeMissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
-      () => this.authService.collegueConnecteObs.subscribe(),
-      () => this.missionService.listeMissions(this.collegue.id).subscribe(
-        listM => this.listMission = listM,
-        () => this.erreurTechnique = true,
-      )
-    )
+
+    this.authService.collegueConnecteObs.subscribe(
+      col => {
+        this.collegue = col;
+        this.missionService.listeMissions(this.collegue.id).subscribe(
+          listM => this.listMission = listM,
+          () => this.erreurTechnique = true,
+        );
+      })
+      
+  
 
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     );
 
-    this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
-      () => this.authService.collegueConnecteObs.subscribe()
-    );
+   
+    this.mission = new Mission(1, null, null, null, null, null, null, null, null)
 
     this.dateTemoin.setDate(this.today.getDate() + 7);
     this.mission = new Mission(1, null, null, null, null, null, null, null, 0);

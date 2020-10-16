@@ -47,16 +47,20 @@ export class AppComponent {
 
     this.collegueConnecte = this.authSrv.collegueConnecteObs;
 
-    this.authSrv.verifierAuthentification().subscribe(col => this.collegue = col,
-      () => this.authSrv.collegueConnecteObs.subscribe(),
+    this.authSrv.verifierAuthentification().subscribe(
+      col => {
+        this.collegue = col;
+        this.authSrv.collegueConnecteObs.subscribe();
+                 if (this.collegue.roles.includes("ROLE_ADMINISTRATEUR")) {
+            this.links.push({ title: 'Nature de mission', fragment: '6', lien: '/natures' },)
+          } else if(this.collegue.roles.includes("ROLE_MANAGER")){
+            this.links.push({ title: 'Validation mission', fragment: '6', lien: '/validation-mission' },)
+          }
+        
+      }
+   
+
       
-      () => {
-        if (this.collegue.roles.includes("ROLE_ADMINISTRATEUR")) {
-          this.links.push({ title: 'Nature de mission', fragment: '6', lien: '/natures' },)
-        } else if(this.collegue.roles.includes("ROLE_MANAGER")){
-          this.links.push({ title: 'Validation mission', fragment: '6', lien: '/validation-mission' },)
-        }
-      } 
     )
   }
 }

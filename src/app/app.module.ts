@@ -20,8 +20,10 @@ import { ModificationMissionComponent } from './pages/mission/modification-missi
 
 
 import { ValidationMissionComponent } from './pages/validation-mission/validation-mission.component';
-import { NgxAutocomPlaceModule } from 'ngx-autocom-place';
+import { PrimesComponent } from './pages/primes/primes.component';
 import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.component';
+import { NgxAutocomPlaceModule } from 'ngx-autocom-place';
+
 
 
 
@@ -39,14 +41,10 @@ import { GestionFraisComponent } from './frais/gestion-frais/gestion-frais.compo
     AjoutNatureComponent,
     SaisieNatureComponent,
     SupprimerNatureComponent,
-
     ModifierNatureComponent,
-
     ValidationMissionComponent,
+    PrimesComponent,
     GestionFraisComponent
-
-
-
 
   ],
   imports: [

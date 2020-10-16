@@ -1,1 +1,50 @@
-<p>primes works!</p>
+<div class="container fluid">
+    <h1>Récapitulatif de primes</h1>
+    <div class="row">
+        <div class="col-4">
+            <form #etatForm="ngForm">
+                <div *ngIf="erreurTechnique" class="alert alert-danger" role="alert">
+                    Oopss !!!!!
+                </div>
+                <div class="form-group row">
+                    <label for="anneeS" class="col-4 col-form-label">Année</label>
+                    <select class="col-4 form-control custom-select mr-sm-2" #anneeS="ngModel" [(ngModel)]="anneeSelect"
+                        id="anneeS" name="anneeS">
+                        <option selected></option>
+                        <option *ngFor="let annee of listAnnee" (click)="alert(annee);getPrimesParMois()">{{annee}}
+                        </option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="col-2">
+            <button (click)="exportexcel()">Excel</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-striped" id="excel-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Date de début</th>
+                        <th scope="col">Date de fin</th>
+                        <th scope="col">Nature</th>
+                        <th scope="col">Prime</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let mission of listMission">
+                        <td>{{mission.dateDebut|date:'dd/MM/yyyy'}}</td>
+                        <td>{{mission.dateFin|date:'dd/MM/yyyy'}}</td>
+                        <td>{{mission.nomNature}}</td>
+                        <td>{{mission.prime}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <p>view-graph works!</p>
+            <div id="container"></div>
+        </div>
+    </div>
+</div>

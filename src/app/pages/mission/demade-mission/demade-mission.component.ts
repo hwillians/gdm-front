@@ -120,16 +120,12 @@ export class DemadeMissionComponent implements OnInit {
           () => this.erreurTechnique = true,
         );
       })
-      
-  
+
 
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     );
-
-   
     this.mission = new Mission(1, null, null, null, null, null, null, null, null)
-
     this.dateTemoin.setDate(this.today.getDate() + 7);
     this.mission = new Mission(1, null, null, null, null, null, null, null, 0);
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)

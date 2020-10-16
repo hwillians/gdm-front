@@ -1,19 +1,16 @@
 <div>
-  <div class="row justify-content-end">
-    <ng-container *ngIf="collegueConnecte | async as col">
-
+  <div class="row justify-content-end" *ngIf="!collegue.estAnonyme()">
+    <ng-container >
       <div class="card" style="width: 15rem;">
         <div class="card-body">
-          <p class="card-text">Bonjour : {{col.nom}}</p>
+          <p class="card-text">Bonjour : {{collegue.nom}}</p>
           <button class="btn link" (click)="seDeconnecter()">Se déconnecter</button>
-
         </div>
       </div>
-
     </ng-container>
   </div>
 
-  <ul ngbNav [activeId]="route.fragment | async" class="nav-tabs">
+  <ul *ngIf="!collegue.estAnonyme()" git ngbNav [activeId]="route.fragment | async" class="nav-tabs">
     <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
       <a ngbNavLink [routerLink]="link.lien">{{ link.title }}</a>
     </li>
@@ -22,6 +19,4 @@
   <main class="container">
     <router-outlet></router-outlet>
   </main>
-
-
 </div>

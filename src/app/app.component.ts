@@ -11,15 +11,15 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
 
-  links = [
+  initialLinks = [
     { title: 'Accueil', fragment: '1', lien: '/accueil' },
     { title: 'Saisie note de frais', fragment: '2', lien: '/gestion-frais' },
     { title: 'Gestion des missions', fragment: '3', lien: '/gestion-mission' },
     { title: 'Planning des missions', fragment: '4', lien: '/planning-mission' },
     { title: 'Primes', fragment: '5', lien: '/primes' },
-
   ];
 
+  links= []
 
   collegueConnecte: Observable<Collegue>;
 
@@ -46,21 +46,21 @@ export class AppComponent {
   ngOnInit(): void {
 
     this.collegueConnecte = this.authSrv.collegueConnecteObs;
-
-    this.authSrv.verifierAuthentification().subscribe(
+    this.collegueConnecte.subscribe(
       col => {
-        this.collegue = col;
-        this.authSrv.collegueConnecteObs.subscribe();
-                 if (this.collegue.roles.includes("ROLE_ADMINISTRATEUR")) {
-            this.links.push({ title: 'Nature de mission', fragment: '6', lien: '/natures' },)
-          } else if(this.collegue.roles.includes("ROLE_MANAGER")){
-            this.links.push({ title: 'Validation mission', fragment: '6', lien: '/validation-mission' },)
-          }
+        this.collegue =col;
+        if (!col.estAnonyme()){
+  
+          this.links=[...this.initialLinks]
+        if (col.roles.includes("ROLE_ADMINISTRATEUR")) {
+          this.links.push({ title: 'Nature de mission', fragment: '6', lien: '/natures' },)
+        } else if (col.roles.includes("ROLE_MANAGER")) {
+          this.links.push({ title: 'Validation mission', fragment: '6', lien: '/validation-mission' },)
+        }
+        }
         
       }
-   
-
-      
     )
+   
   }
 }

@@ -15,36 +15,36 @@ export class ValidationMissionComponent implements OnInit {
   listMission: Mission[]
   erreurTechnique = false
 
+  constructor(private missionService: MissionService, private authService: AuthService,) { }
+
   acepterMission(idMission: number, valide: boolean) {
-    this.missionService.validationMission(idMission, valide,this.manager.id).subscribe(
-      listM => this.listMission=listM,
+    this.missionService.validationMission(idMission, valide, this.manager.id).subscribe(
+      listM => this.listMission = listM,
     )
-   alert('la mission '+idMission+' a été acceptée')
+    alert('la mission ' + idMission + ' a été acceptée')
   }
 
   rejeterMission(idMission: number, valide: boolean) {
-    this.missionService.validationMission(idMission, valide,this.manager.id).subscribe(
-      listM => this.listMission=listM,
+    this.missionService.validationMission(idMission, valide, this.manager.id).subscribe(
+      listM => this.listMission = listM,
     )
-    alert('la mission '+idMission+' a été refusée')
+    alert('la mission ' + idMission + ' a été refusée')
   }
 
-  traitementNuit(){
+  traitementNuit() {
     this.missionService.traitementNuit().subscribe(
-    
+
     )
   }
-
-  constructor(private missionService: MissionService, private authService: AuthService,) { }
 
   ngOnInit(): void {
-
-    this.authService.verifierAuthentification().subscribe(col => this.manager = col,
-      () => this.authService.collegueConnecteObs.subscribe(),
-      () => this.missionService.listeMissionsManager(this.manager.id).subscribe(
-        listM => this.listMission = listM,
-        () => this.erreurTechnique = true,
-      )
-    )
+    this.authService.collegueConnecteObs.subscribe(
+      col => {
+        this.manager = col;
+        this.missionService.listeMissionsManager(this.manager.id).subscribe(
+          listM => this.listMission = listM,
+          () => this.erreurTechnique = true,
+        );
+      })
   }
 }

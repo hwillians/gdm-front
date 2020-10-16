@@ -22,7 +22,6 @@ export class GestionMissionComponent implements OnInit {
     private router: Router) {
 
   }
-
   demanderMission() {
   }
 
@@ -35,12 +34,13 @@ export class GestionMissionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.verifierAuthentification().subscribe(col => this.collegue = col,
-      () => this.authService.collegueConnecteObs.subscribe(),
-      () => this.missionService.listeMissions(this.collegue.id).subscribe(
-        listM => this.listMission = listM,
-        () => this.erreurTechnique = true,
-      )
-    )
+    this.authService.collegueConnecteObs.subscribe(
+      col => {
+        this.collegue = col;
+        this.missionService.listeMissions(this.collegue.id).subscribe(
+          listM => this.listMission = listM,
+          () => this.erreurTechnique = true,
+        );
+      })
   }
 }

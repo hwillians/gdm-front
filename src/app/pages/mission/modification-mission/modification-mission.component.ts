@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Collegue } from 'src/app/auth/auth.domains';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -83,9 +83,9 @@ export class ModificationMissionComponent implements OnInit {
     } else if (this.mission.transport === "Avion" && this.parseDate(this.mission.dateDebut) < this.dateTemoin) {
       this.openVerticallyCentered(content)
       this.message = "Pour les deplacement en avion une anticipation de 7 jours est exigée"
-     } else if (this.siChevauche(this.parseDate(this.mission.dateDebut), this.parseDate(this.mission.dateFin))) {
-       this.openVerticallyCentered(content);
-       this.message = "Cette mission chevauche une autre mission ou un congé";
+    } else if (this.siChevauche(this.parseDate(this.mission.dateDebut), this.parseDate(this.mission.dateFin))) {
+      this.openVerticallyCentered(content);
+      this.message = "Cette mission chevauche une autre mission ou un congé";
     } else if (this.parseDate(this.mission.dateDebut).getDay() === 6 || this.parseDate(this.mission.dateDebut).getDay() === 7) {
       this.openVerticallyCentered(content);
       this.message = "la mission ne peut pas commencer un jour non travaillé";
@@ -127,7 +127,6 @@ export class ModificationMissionComponent implements OnInit {
     this.natureService.listeNatures().subscribe(
       listN => this.listNature = listN,
     )
-
     this.dateMin = this.calendar.getNext(this.calendar.getToday(), 'd', 1)
   }
 }

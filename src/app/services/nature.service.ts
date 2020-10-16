@@ -12,9 +12,9 @@ export class NatureService {
 
   URL_BACKEND = environment.baseUrl;
 
+  subjectNatureSelectionne = new Subject<Nature>();
 
 
-  subNature = new Subject<Nature>();
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -36,11 +36,11 @@ export class NatureService {
       JSON.stringify(nature),
       this.httpOptions
     ).subscribe((data: any) => {
-      alert('Félicitation ! Vous avez créé une nouvelle nature.');
+      alert('Merci ! une nouvelle nature à été rajoutée');
     }, (error: HttpErrorResponse) => {
       console.log('error', error);
       if (error.status === 409) {
-        alert('Cette nature existe déjà, veuillez modifier la nature dans le tableau !');
+        alert('Cette nature existe dejà, veuillez modifier votre saisie');
       }
       else if (error.status === 400) {
         alert('Veuillez remplir tous les champs !');
@@ -49,14 +49,11 @@ export class NatureService {
     });
   }
 
-  deleteNature(id: number): Observable<number> {
-    return this.http.delete<number>(`${this.URL_BACKEND}natures/${id}`);
-  }
 
   modifierNature(id: number, nature: Nature): void {
     // envoie de la requête
     this.http.patch(`${this.URL_BACKEND}natures/${id}`,
-    JSON.stringify(nature),
+      JSON.stringify(nature),
       this.httpOptions
     ).subscribe((nature: any) => {
       alert(`La nature existante à été modifiée !`);
@@ -68,6 +65,20 @@ export class NatureService {
 
     });
   }
+
+  deleteNature(id: number): void {
+    //envoie de la requête
+    this.http.delete(`${this.URL_BACKEND}natures/${id}`
+    ).subscribe((data: any) => {
+      alert(data.message);
+    }
+    );
+
+  }
+
+
+
+
 
 
 

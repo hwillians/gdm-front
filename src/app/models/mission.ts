@@ -1,3 +1,5 @@
+
+
 export class Mission {
 
     constructor(public id: number,

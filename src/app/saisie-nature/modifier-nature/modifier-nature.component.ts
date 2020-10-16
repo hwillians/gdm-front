@@ -16,10 +16,7 @@ export class ModifierNatureComponent implements OnInit {
   listeMissions: Mission[];
   listeNatures: Nature[];
 
-  
   constructor(private service: NatureService, config: NgbModalConfig, private modalService: NgbModal) {
-    config.backdrop = 'static';
-    config.keyboard = false;
   }
 
 
@@ -28,28 +25,28 @@ export class ModifierNatureComponent implements OnInit {
 
   close(): void {
     this.modalService.dismissAll();
-    window.location.reload();
+  window.location.reload();
   }
 
   open(content): void {
     this.modalService.open(content);
   }
 
+ 
   valider(): void {
-    console.log("newNature ", this.nature);
-
-    if (!this.nature.missionFacturee) {
-      this.nature.missionFacturee = false;
-      this.nature.tjm = 0;
+   if (!this.nature.missionFacturee) {
+     this.nature.missionFacturee = false;
+    this.nature.tjm = 0;
     }
-    if (!this.nature.versementPrime) {
+   if (!this.nature.versementPrime) {
       this.nature.versementPrime = false;
-      this.nature.pourcentagePrime = 0;
-    }
+    this.nature.pourcentagePrime = 0;
+   }
     setTimeout(() => {
-      this.service.modifierNature(this.nature.id, this.nature);
-    }, 1000);
-  }
+    this.service.modifierNature(this.nature.id, this.nature);
+    window.location.reload();
+   }, 1000);
+ }
     
-
+ 
 }

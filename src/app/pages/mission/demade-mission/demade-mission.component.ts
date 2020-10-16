@@ -11,7 +11,7 @@ import { NatureService } from 'src/app/services/nature.service';
 })
 export class DemadeMissionComponent implements OnInit {
 
-  mission: Mission = new Mission(1, new Date(1995, 11, 17), new Date(1995, 11, 17), 'conseil', 'caracas', 'montpellier', 'bus', 'valide', 10)
+  mission: Mission = new Mission(1, new Date(1995, 11, 17), new Date(1995, 11, 17), 'conseil', 'caracas', 'montpellier', 'bus', 'valide', 10);
   listNature: Nature[]
 
   constructor(public activeModal: NgbActiveModal, public natureService: NatureService) { }

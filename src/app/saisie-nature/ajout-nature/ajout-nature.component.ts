@@ -45,7 +45,7 @@ constructor(private service: NatureService, config: NgbModalConfig, private moda
     }
     setTimeout(() => {
       this.service.ajouterNature(this.newNature);
-      window.location.reload();
+      window.location.reload()
     }, 1000);
   }
 

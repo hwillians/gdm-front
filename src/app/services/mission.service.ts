@@ -42,6 +42,7 @@ export class MissionService {
     return this.http.patch<Mission[]>(`${environment.baseUrl}missions/manager/${idManager}`, { "id": idMission, "valide": valide })
   }
 
+
   supprimerMission(id:number):Observable<Mission[]> {
     return this.http.delete<Mission[]>(`${environment.baseUrl}missions/${id}`)
   }
@@ -49,10 +50,9 @@ export class MissionService {
   traitementNuit(){
     return this.http.patch(`${environment.baseUrl}missions/nuit`,null)
   }
+
   getMission(id: number): Observable<Mission>{
     return this.http.get<Mission>(`${environment.baseUrl}missions?id=${id}`);
   }
-
-
 
 }

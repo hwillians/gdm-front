@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "cross-var ng build --prod --base-href https://$GH_ORG.github.io/$APP_REPO/",
+    "build": "cross-var ng build --prod --base-href https://hwillians.github.io/gdm-front/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
